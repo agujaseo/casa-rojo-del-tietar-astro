@@ -1,6 +1,5 @@
 import { defineConfig, envField } from 'astro/config';
 import react from '@astrojs/react';
-import keystatic from '@keystatic/astro';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import node from '@astrojs/node';
@@ -26,7 +25,6 @@ export default defineConfig({
   }),
   integrations: [
     react(),
-    keystatic(),
     sitemap({
       filter: (page) =>
         !page.includes('/keystatic') &&
@@ -41,8 +39,5 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
-    optimizeDeps: {
-      exclude: ['@keystatic/astro'],
-    },
   },
 });

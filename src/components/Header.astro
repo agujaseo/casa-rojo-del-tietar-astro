@@ -21,9 +21,9 @@ function isActive(href: string) {
 
 <header
   id="site-header"
-  class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 transition-all duration-300"
+  class="fixed top-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-outline-variant/30 transition-all duration-300"
 >
-  <!-- Top Bar Informativa -->
+  <!-- Top Bar Informativa (Solo Desktop) -->
   <div class="bg-primary text-on-primary text-xs py-1.5 px-4 hidden md:block">
     <div class="max-w-[1360px] mx-auto px-6 flex items-center justify-between">
       <div class="flex items-center gap-4">
@@ -48,36 +48,37 @@ function isActive(href: string) {
     </div>
   </div>
 
-  <!-- Main Navigation Bar -->
-  <div class="h-20 max-w-[1360px] mx-auto px-5 md:px-10 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-3.5 group" aria-label="Ir a inicio de Casa Rojo del Tiétar">
+  <!-- Main Navigation Bar (Optimizada para Móvil y Desktop) -->
+  <div class="h-16 sm:h-20 max-w-[1360px] mx-auto px-3.5 sm:px-6 lg:px-10 flex items-center justify-between gap-2">
+    <a href="/" class="flex items-center gap-2.5 sm:gap-3.5 group min-w-0" aria-label="Ir a inicio de Casa Rojo del Tiétar">
       <img
         src={siteConfig.logo}
         alt="Logo Casa Rojo del Tiétar"
-        width="48"
-        height="45"
+        width="44"
+        height="42"
         loading="eager"
         decoding="async"
-        class="h-11 w-auto object-contain rounded-sm transition-transform duration-300 group-hover:scale-105"
+        class="h-9 sm:h-11 w-auto shrink-0 object-contain rounded-sm transition-transform duration-300 group-hover:scale-105"
       />
-      <div class="flex flex-col">
-        <span class="font-serif text-[22px] font-medium tracking-tight text-primary leading-none">
+      <div class="flex flex-col min-w-0">
+        <span class="font-serif text-[16px] sm:text-[21px] font-medium tracking-tight text-primary leading-tight truncate">
           Casa Rojo del Tiétar
         </span>
-        <span class="label-caps text-secondary mt-1">
-          Casa Rural Boutique · 10-13 Plazas
+        <span class="text-[9px] sm:text-[10px] uppercase tracking-[0.12em] text-secondary font-semibold mt-0.5 truncate">
+          <span class="sm:hidden">La Iglesuela · 10-13 Plazas</span>
+          <span class="hidden sm:inline">Casa Rural Boutique · 10-13 Plazas</span>
         </span>
       </div>
     </a>
 
     <!-- Desktop Nav -->
-    <nav class="hidden xl:flex items-center gap-6" aria-label="Navegación principal">
+    <nav class="hidden xl:flex items-center gap-6 shrink-0" aria-label="Navegación principal">
       {navItems.map((item) => (
         <a
           href={item.href}
           aria-current={isActive(item.href) ? 'page' : undefined}
           class:list={[
-            'text-[14px] font-medium transition-colors py-1',
+            'text-[14px] font-medium transition-colors py-1 whitespace-nowrap',
             isActive(item.href)
               ? 'text-primary font-semibold border-b-2 border-primary'
               : 'text-on-surface-variant hover:text-primary',
@@ -89,35 +90,40 @@ function isActive(href: string) {
     </nav>
 
     <!-- Actions -->
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
       <a
         href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent('Hola, me gustaría consultar disponibilidad para Casa Rojo del Tiétar.')}`}
         target="_blank"
         rel="noopener noreferrer"
-        class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded border border-outline-variant/60 text-on-surface text-xs font-semibold uppercase tracking-wider hover:bg-surface-container transition-colors"
+        class="hidden md:inline-flex items-center gap-2 px-3.5 py-2 rounded-lg border border-outline-variant/60 text-on-surface text-xs font-semibold uppercase tracking-wider hover:bg-surface-container transition-colors"
         aria-label="Consultar por WhatsApp"
       >
         <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
         <span>WhatsApp</span>
       </a>
 
+      <!-- Botón compacto en móvil, completo en tablet/desktop -->
       <a
         href="/reservas"
-        class="inline-flex items-center justify-center px-5 py-2.5 bg-primary-container text-on-primary rounded text-sm font-medium tracking-wide transition-colors duration-200 hover:bg-primary shadow-sm"
+        class="inline-flex items-center justify-center px-3 py-1.5 sm:px-5 sm:py-2.5 bg-primary-container text-on-primary rounded-lg text-xs sm:text-sm font-semibold tracking-wide transition-colors duration-200 hover:bg-primary shadow-xs whitespace-nowrap"
       >
-        Reserva Ahora
+        <span class="sm:hidden">Reservar</span>
+        <span class="hidden sm:inline">Reserva Ahora</span>
       </a>
 
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-toggle"
         type="button"
-        class="xl:hidden inline-flex items-center justify-center p-2 rounded text-primary hover:bg-surface-container transition-colors"
+        class="xl:hidden inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-lg text-primary hover:bg-surface-container transition-colors cursor-pointer"
         aria-label="Abrir menú de navegación"
         aria-expanded="false"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path id="menu-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16" />
+        <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
@@ -126,31 +132,46 @@ function isActive(href: string) {
   <!-- Mobile Navigation Drawer -->
   <div
     id="mobile-menu"
-    class="hidden xl:hidden bg-surface border-t border-outline-variant/40 px-6 py-6 shadow-lg"
+    class="hidden xl:hidden bg-surface border-t border-outline-variant/40 px-5 py-5 shadow-2xl max-h-[calc(100vh-4rem)] overflow-y-auto"
   >
-    <nav class="flex flex-col space-y-3" aria-label="Menú móvil">
+    <nav class="flex flex-col space-y-1" aria-label="Menú móvil">
       {navItems.map((item) => (
         <a
           href={item.href}
           class:list={[
-            'py-2 text-base font-medium border-b border-outline-variant/20',
-            isActive(item.href) ? 'text-primary font-semibold' : 'text-on-surface-variant',
+            'py-2.5 px-3 rounded-xl text-[15px] font-medium flex items-center justify-between transition-colors',
+            isActive(item.href)
+              ? 'bg-primary/10 text-primary font-bold'
+              : 'text-on-surface hover:bg-surface-container-low',
           ]}
         >
-          {item.label}
+          <span>{item.label}</span>
+          <span class="text-xs text-secondary">→</span>
         </a>
       ))}
-      <div class="pt-4 flex flex-col gap-3">
+
+      <div class="pt-4 mt-2 border-t border-outline-variant/30 flex flex-col gap-2.5">
         <a
           href="/reservas"
-          class="w-full py-3 bg-primary-container text-on-primary text-center rounded font-medium"
+          class="w-full py-3 bg-primary-container text-on-primary text-center rounded-xl font-semibold text-sm shadow-xs"
         >
           Consultar Disponibilidad y Reservar
         </a>
-        <div class="flex items-center justify-center gap-4 text-sm text-primary font-semibold pt-2">
-          <a href={`tel:${siteConfig.phone1Raw}`}>📞 {siteConfig.phone1}</a>
-          <span>·</span>
-          <a href={`tel:${siteConfig.phone2Raw}`}>📞 {siteConfig.phone2}</a>
+        <div class="grid grid-cols-2 gap-2">
+          <a
+            href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent('Hola, me gustaría consultar disponibilidad para Casa Rojo del Tiétar.')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="py-2.5 px-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-center text-xs font-bold flex items-center justify-center gap-1.5"
+          >
+            <span>💬</span> WhatsApp Directo
+          </a>
+          <a
+            href={`tel:${siteConfig.phone1Raw}`}
+            class="py-2.5 px-3 rounded-xl bg-surface-container-low border border-outline-variant/40 text-primary text-center text-xs font-bold flex items-center justify-center gap-1.5"
+          >
+            <span>📞</span> {siteConfig.phone1}
+          </a>
         </div>
       </div>
     </nav>
@@ -161,10 +182,16 @@ function isActive(href: string) {
   (() => {
     const btn = document.getElementById('mobile-menu-toggle');
     const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
     if (btn && menu) {
       btn.addEventListener('click', () => {
         const isHidden = menu.classList.toggle('hidden');
         btn.setAttribute('aria-expanded', String(!isHidden));
+        if (iconOpen && iconClose) {
+          iconOpen.classList.toggle('hidden', !isHidden);
+          iconClose.classList.toggle('hidden', isHidden);
+        }
       });
     }
   })();
