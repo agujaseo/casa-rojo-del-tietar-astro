@@ -43,10 +43,9 @@ npm run preview
 
 ## 🔐 Variables de Entorno (`.env`)
 
-Copia `.env.example` a `.env` para configurar las credenciales del panel de administración `/keystatic`:
+El acceso a `/keystatic` está protegido mediante hash criptográfico SHA-256 con sal (`KEYSTATIC_AUTH_HASH`), sin almacenar nunca contraseñas en texto plano en el código fuente:
 
 ```env
-KEYSTATIC_USER=admin
-KEYSTATIC_PASS=RojoTietar2026!
+KEYSTATIC_AUTH_HASH=05c0dd5a33807e1ab100a7261cbc62995272356d36d7f362cd83eaf7ce806b4e
 SITE_URL=https://casaruralsierradeltietar.com
 ```

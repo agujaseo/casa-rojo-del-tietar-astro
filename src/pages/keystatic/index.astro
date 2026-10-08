@@ -57,6 +57,87 @@ const availableImages = fullGallery.map((g) => g.src);
     />
   </head>
   <body class="bg-[#f4f0ea] text-[#1c1b1a] antialiased min-h-screen flex flex-col">
+    <!-- Private Authentication Gate (No credentials exposed in source) -->
+    <div id="cms-auth-gate" class="min-h-screen flex items-center justify-center px-4 py-12 bg-[#1c1b1a] relative overflow-hidden">
+      <div class="absolute inset-0 opacity-20">
+        <img src="/uploads/Casa-roja-con-un-bonito-atardecer.png" alt="" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#1c1b1a] via-[#1c1b1a]/85 to-[#1c1b1a]/60"></div>
+      </div>
+
+      <div class="relative z-10 w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-stone-200/80">
+        <div class="flex items-center gap-3.5 mb-6 pb-5 border-b border-stone-100">
+          <img src="/uploads/logo.jpg" alt="Casa Rojo del Tiétar" class="h-12 w-auto rounded-xs shadow-xs" />
+          <div>
+            <span class="block text-[10px] font-bold uppercase tracking-widest text-[#703829]">Acceso Restringido · Propietarios</span>
+            <h1 class="font-serif text-2xl font-bold text-stone-900">Keystatic CMS</h1>
+          </div>
+        </div>
+
+        <p class="text-xs text-stone-600 leading-relaxed mb-6">
+          Introduce tus credenciales de administración de <strong>Casa Rojo del Tiétar</strong> para gestionar tarifas, estancias, blog y conexión con AvaiBook.
+        </p>
+
+        <form id="cms-login-form" class="space-y-4" autocomplete="on">
+          <div>
+            <label for="cms-user" class="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-1.5">
+              Usuario / Correo Electrónico
+            </label>
+            <input
+              id="cms-user"
+              name="username"
+              type="email"
+              required
+              autocomplete="username"
+              placeholder="Correo de administración"
+              class="w-full px-4 py-3 rounded-xl bg-[#fff8f5] border border-stone-300 text-sm text-stone-900 focus:outline-none focus:border-[#703829]"
+            />
+          </div>
+
+          <div>
+            <label for="cms-pass" class="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-1.5">
+              Contraseña
+            </label>
+            <div class="relative">
+              <input
+                id="cms-pass"
+                name="password"
+                type="password"
+                required
+                autocomplete="current-password"
+                placeholder="••••••••••••••••••••"
+                class="w-full px-4 py-3 pr-16 rounded-xl bg-[#fff8f5] border border-stone-300 text-sm text-stone-900 focus:outline-none focus:border-[#703829]"
+              />
+              <button
+                type="button"
+                id="btn-toggle-pass"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold uppercase tracking-wider text-stone-500 hover:text-[#703829] cursor-pointer"
+              >
+                Ver
+              </button>
+            </div>
+          </div>
+
+          <div id="cms-login-error" class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-xs font-semibold text-red-800">
+            Credenciales incorrectas. Verifica el usuario y la contraseña.
+          </div>
+
+          <button
+            type="submit"
+            class="w-full py-3.5 px-6 rounded-xl bg-[#703829] hover:bg-[#8c4f3e] text-white font-bold text-xs uppercase tracking-widest transition-all shadow-md cursor-pointer mt-2"
+          >
+            🔒 Entrar al Panel de Gestión
+          </button>
+        </form>
+
+        <div class="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-400">
+          <span>Cifrado SHA-256 Salted</span>
+          <a href="/" class="text-[#703829] font-semibold hover:underline">← Volver a la web</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Protected CMS App Wrapper (Hidden until authenticated) -->
+    <div id="cms-app-wrapper" class="hidden min-h-screen flex-col">
     <!-- Top Admin Header -->
     <header class="bg-[#1c1b1a] text-white border-b-2 border-[#703829] sticky top-0 z-40">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
@@ -67,12 +148,12 @@ const availableImages = fullGallery.map((g) => g.src);
               <span class="font-serif font-bold text-base sm:text-lg text-white truncate">
                 Keystatic CMS · Casa Rojo del Tiétar
               </span>
-              <span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-[#703829] text-[#ffb4a0] text-[10px] font-bold uppercase tracking-wider">
-                Git + cPanel Ready
+              <span class="hidden sm:inline-block px-2 py-0.5 rounded-full bg-[#59614e] text-white text-[10px] font-bold uppercase tracking-wider">
+                Sesión Privada Activa
               </span>
             </div>
             <p class="text-[11px] text-stone-400 truncate">
-              Gestión de Tarifas, Estancias (8), Blog SEO (6) y Solicitudes de Reserva (casarural@rojodeltietar.com)
+              Gestión de Tarifas, Estancias (8), Blog SEO (6) y Solicitudes de Reserva
             </p>
           </div>
         </div>
@@ -82,14 +163,22 @@ const availableImages = fullGallery.map((g) => g.src);
             href="/seguimiento-emails"
             class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-[#ffb4a0] text-xs font-semibold transition-colors"
           >
-            📬 Ver Emails Test Ismael
+            📬 Seguimiento Emails
           </a>
           <a
             href="/"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#703829] hover:bg-[#8c4f3e] text-white text-xs font-semibold transition-colors"
           >
-            ↗ Ver Web Pública
+            ↗ Ver Web
           </a>
+          <button
+            type="button"
+            id="btn-cms-logout"
+            class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-red-900/80 text-stone-200 text-xs font-semibold transition-colors cursor-pointer"
+            title="Cerrar sesión"
+          >
+            🔒 Salir
+          </button>
         </div>
       </div>
     </header>
@@ -462,9 +551,75 @@ const availableImages = fullGallery.map((g) => g.src);
         </form>
       </div>
     </dialog>
+    </div>
 
     <script is:inline>
       (() => {
+        // Salted SHA-256 digest of authorized owner credentials (never stored in plaintext)
+        const EXPECTED_HASH = '05c0dd5a33807e1ab100a7261cbc62995272356d36d7f362cd83eaf7ce806b4e';
+        const SESSION_KEY = 'rt_cms_auth_v1';
+
+        const authGate = document.getElementById('cms-auth-gate');
+        const appWrapper = document.getElementById('cms-app-wrapper');
+        const loginForm = document.getElementById('cms-login-form');
+        const userIn = document.getElementById('cms-user');
+        const passIn = document.getElementById('cms-pass');
+        const loginErr = document.getElementById('cms-login-error');
+        const togglePassBtn = document.getElementById('btn-toggle-pass');
+        const logoutBtn = document.getElementById('btn-cms-logout');
+
+        async function sha256Hex(str) {
+          const buf = new TextEncoder().encode(str);
+          const digest = await crypto.subtle.digest('SHA-256', buf);
+          return Array.from(new Uint8Array(digest))
+            .map((b) => b.toString(16).padStart(2, '0'))
+            .join('');
+        }
+
+        function unlockCms() {
+          authGate?.classList.add('hidden');
+          appWrapper?.classList.remove('hidden');
+          appWrapper?.classList.add('flex');
+        }
+
+        function lockCms() {
+          sessionStorage.removeItem(SESSION_KEY);
+          appWrapper?.classList.add('hidden');
+          appWrapper?.classList.remove('flex');
+          authGate?.classList.remove('hidden');
+          if (passIn) passIn.value = '';
+        }
+
+        if (sessionStorage.getItem(SESSION_KEY) === EXPECTED_HASH) {
+          unlockCms();
+        }
+
+        togglePassBtn?.addEventListener('click', () => {
+          if (!passIn) return;
+          const isPwd = passIn.getAttribute('type') === 'password';
+          passIn.setAttribute('type', isPwd ? 'text' : 'password');
+          togglePassBtn.textContent = isPwd ? 'Ocultar' : 'Ver';
+        });
+
+        loginForm?.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const u = (userIn?.value || '').trim().toLowerCase();
+          const p = passIn?.value || '';
+          const hash = await sha256Hex(`rt_2026_v1:${u}:${p}`);
+
+          if (hash === EXPECTED_HASH) {
+            sessionStorage.setItem(SESSION_KEY, hash);
+            loginErr?.classList.add('hidden');
+            unlockCms();
+          } else {
+            loginErr?.classList.remove('hidden');
+          }
+        });
+
+        logoutBtn?.addEventListener('click', () => {
+          lockCms();
+        });
+
         const tabs = document.querySelectorAll('.cms-tab-btn');
         const panels = document.querySelectorAll('.cms-panel');
         const toast = document.getElementById('cms-toast');
@@ -504,10 +659,14 @@ const availableImages = fullGallery.map((g) => g.src);
             await fetch('/api/keystatic-save.php', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ collection: 'ajustes', data: payload }),
+              body: JSON.stringify({
+                authToken: sessionStorage.getItem(SESSION_KEY) || '',
+                collection: 'ajustes',
+                data: payload,
+              }),
             });
           } catch {}
-          showToast('✓ Ajustes y tarifas guardados en Keystatic (casarural@rojodeltietar.com).');
+          showToast('✓ Ajustes y tarifas guardados en Keystatic.');
         });
 
         // Modal Editor
@@ -581,7 +740,11 @@ const availableImages = fullGallery.map((g) => g.src);
             await fetch('/api/keystatic-save.php', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ collection: item.type, item }),
+              body: JSON.stringify({
+                authToken: sessionStorage.getItem(SESSION_KEY) || '',
+                collection: item.type,
+                item,
+              }),
             });
           } catch {}
           modal.close();

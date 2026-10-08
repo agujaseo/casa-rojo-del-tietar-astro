@@ -78,10 +78,10 @@ export const POST: APIRoute = async ({ request }) => {
     // Send via SMTP if configured
     let smtpSent = false;
     let smtpDetails = '';
-    const smtpHost = process.env.SMTP_HOST || 'mail.aflaredo.com';
+    const smtpHost = process.env.SMTP_HOST || '';
     const smtpPort = Number(process.env.SMTP_PORT || 465);
-    const smtpUser = process.env.SMTP_USER || 'direccion@aflaredo.com';
-    const smtpPass = process.env.SMTP_PASS || 'PassAdmin123!';
+    const smtpUser = process.env.SMTP_USER || '';
+    const smtpPass = process.env.SMTP_PASS || '';
 
     try {
       const transporter = nodemailer.createTransport({
