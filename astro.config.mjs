@@ -32,7 +32,8 @@ export default defineConfig({
         !page.includes('/keystatic') &&
         !page.includes('/aviso-legal') &&
         !page.includes('/privacidad') &&
-        !page.includes('/cookies'),
+        !page.includes('/cookies') &&
+        !page.includes('/seguimiento-emails'),
       changefreq: 'weekly',
       priority: 0.8,
       lastmod: new Date(),

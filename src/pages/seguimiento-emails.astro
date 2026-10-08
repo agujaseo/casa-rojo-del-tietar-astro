@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import {
+  calculateReservationQuote,
+  buildOwnerEmail,
+  buildClientImmediateEmail,
+  buildPreArrivalEmail,
+  buildPostStayEmail,
+} from '../lib/emailTemplates';
+
+// Simulación real del cliente solicitado: Ismael Laredo (uaeup2019@gmail.com)
+const testLead = calculateReservationQuote({
+  nombre: 'Ismael Laredo',
+  email: 'uaeup2019@gmail.com',
+  telefono: '605 935 487',
+  llegada: '2026-10-16',
+  salida: '2026-10-18',
+  huespedes: 12,
+  mascota: true,
+  interesCatering: true,
+  mensaje: 'Hola, somos un grupo de 12 amigos (5 parejas y 2 niños). Llegaremos el viernes sobre las 19:30h desde Madrid. Vamos con un perro tranquilo y nos gustaría saber opciones para encargar cochifrito o asado el sábado a mediodía.',
+  origenFormulario: 'Formulario de Reserva Directa (/reservas)',
+});
+testLead.id = 'RT-2026-1084';
+
+const ownerEmail = buildOwnerEmail(testLead);
+const clientEmail1 = buildClientImmediateEmail(testLead);
+const clientEmail2 = buildPreArrivalEmail(testLead);
+const clientEmail3 = buildPostStayEmail(testLead);
+---
+
+<Layout
+  title="Flujo de Comunicaciones y Emails de Reserva | Casa Rojo del Tiétar"
+  description="Vista previa y test real del sistema de correos y seguimiento de huéspedes de Casa Rojo del Tiétar (casarural@rojodeltietar.com)."
+  noindex={true}
+>
+  <section class="pt-32 pb-24 bg-[#f4f0ea]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <!-- Header -->
+      <div class="bg-[#1c1b1a] text-white rounded-3xl p-8 sm:p-10 shadow-xl border-b-4 border-[#703829]">
+        <span class="inline-block px-3.5 py-1 rounded-full bg-[#703829] text-[#ffb4a0] text-xs font-bold uppercase tracking-widest mb-3">
+          Auditoría de Comunicaciones y Hospitalidad · Caso Real: Ismael Laredo
+        </span>
+        <h1 class="font-serif text-3xl sm:text-5xl font-bold mb-4">
+          Qué recibe <span class="text-[#ffb4a0]">casarural@rojodeltietar.com</span> y qué recibe el Huésped (<span class="text-[#ffb4a0]">uaeup2019@gmail.com</span>)
+        </h1>
+        <p class="text-stone-300 text-base leading-relaxed max-w-4xl">
+          Tono diseñado específicamente para el nicho de <strong>alquiler íntegro de grupo en el Valle del Tiétar</strong>: trato de anfitrión real, hospitalario, práctico y detallista (café en grano recién molido, bizcocho casero, leña de encina lista, suelo radiante encendido antes de que lleguen y gestión de asado/cochifrito local), <strong>sin caer en frases cursis ni pastelosas</strong>.
+        </p>
+      </div>
+
+      <!-- Visual Pipeline Timeline -->
+      <div class="bg-white rounded-3xl p-8 border border-stone-200 shadow-xs">
+        <h2 class="font-serif text-2xl font-bold text-stone-900 mb-6">
+          Ciclo Completo de Seguimiento del Huésped (4 Hitos)
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+          <div class="p-5 rounded-2xl bg-[#fff8f5] border border-[#eadcd5]">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#703829] block mb-1">Minuto 0 · Aviso Interno</span>
+            <h3 class="font-serif font-bold text-lg text-stone-900 mb-2">1. Email a la Casa</h3>
+            <p class="text-xs text-stone-600 leading-relaxed">
+              Llega a <code>casarural@rojodeltietar.com</code> con la ficha de Ismael Laredo, el cálculo exacto (790 € · señal 197,50 €), etiquetas de mascota/catering y botones de 1 clic para confirmar por email o abrir WhatsApp.
+            </p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#fff8f5] border border-[#eadcd5]">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#703829] block mb-1">Minuto 0 · Al Huésped</span>
+            <h3 class="font-serif font-bold text-lg text-stone-900 mb-2">2. Confirmación y Detalles</h3>
+            <p class="text-xs text-stone-600 leading-relaxed">
+              Llega a <code>uaeup2019@gmail.com</code> con lo que ya tiene incluido para que pueda pasárselo a su grupo de 12 amigos: 5 suites con baño, desayuno completo, leña gratis y desglose por persona (32,92 €/noche).
+            </p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#fff8f5] border border-[#eadcd5]">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#59614e] block mb-1">48h antes del Viernes</span>
+            <h3 class="font-serif font-bold text-lg text-stone-900 mb-2">3. Guía Pre-Llegada</h3>
+            <p class="text-xs text-stone-600 leading-relaxed">
+              Pregunta la hora de llegada para encender antes el suelo radiante, envía ubicación exacta de aparcamiento en la puerta, recuerda qué NO necesitan cargar en el maletero y ofrece dejar encargado el cochifrito.
+            </p>
+          </div>
+          <div class="p-5 rounded-2xl bg-[#fff8f5] border border-[#eadcd5]">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#703829] block mb-1">Lunes (24h post-salida)</span>
+            <h3 class="font-serif font-bold text-lg text-stone-900 mb-2">4. Fianza y Fidelización</h3>
+            <p class="text-xs text-stone-600 leading-relaxed">
+              Confirma de oficio la devolución de los 100 € de fianza sin que el cliente tenga que pedirla, agradece haber cuidado la casa y regala las camas supletorias (0 €) y salida tardía para la próxima vez que repitan.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL 1: OWNER -->
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 px-2">
+          <span class="px-3 py-1 rounded-full bg-[#703829] text-white text-xs font-bold uppercase tracking-wider">
+            CORREO A LA PROPIEDAD · Para: casarural@rojodeltietar.com (Reply-To: uaeup2019@gmail.com)
+          </span>
+          <span class="text-xs font-semibold text-stone-600">Asunto: {ownerEmail.subject}</span>
+        </div>
+        <div class="rounded-3xl overflow-hidden shadow-lg border border-stone-300 bg-white" set:html={ownerEmail.html} />
+      </div>
+
+      <!-- EMAIL 2: CLIENT IMMEDIATE -->
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 px-2">
+          <span class="px-3 py-1 rounded-full bg-stone-900 text-[#ffb4a0] text-xs font-bold uppercase tracking-wider">
+            CORREO 1 AL CLIENTE (INMEDIATO) · Para: Ismael Laredo &lt;uaeup2019@gmail.com&gt;
+          </span>
+          <span class="text-xs font-semibold text-stone-600">Asunto: {clientEmail1.subject}</span>
+        </div>
+        <div class="rounded-3xl overflow-hidden shadow-lg border border-stone-300 bg-white" set:html={clientEmail1.html} />
+      </div>
+
+      <!-- EMAIL 3: PRE-ARRIVAL 48H -->
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 px-2">
+          <span class="px-3 py-1 rounded-full bg-[#59614e] text-white text-xs font-bold uppercase tracking-wider">
+            CORREO 2 DE SEGUIMIENTO (48H ANTES DE LLEGAR) · Para: Ismael Laredo &lt;uaeup2019@gmail.com&gt;
+          </span>
+          <span class="text-xs font-semibold text-stone-600">Asunto: {clientEmail2.subject}</span>
+        </div>
+        <div class="rounded-3xl overflow-hidden shadow-lg border border-stone-300 bg-white" set:html={clientEmail2.html} />
+      </div>
+
+      <!-- EMAIL 4: POST-STAY & DEPOSIT RETURN -->
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 px-2">
+          <span class="px-3 py-1 rounded-full bg-[#703829] text-white text-xs font-bold uppercase tracking-wider">
+            CORREO 3 POST-ESTANCIA Y FIDELIZACIÓN (24H TRAS SALIDA) · Para: Ismael Laredo &lt;uaeup2019@gmail.com&gt;
+          </span>
+          <span class="text-xs font-semibold text-stone-600">Asunto: {clientEmail3.subject}</span>
+        </div>
+        <div class="rounded-3xl overflow-hidden shadow-lg border border-stone-300 bg-white" set:html={clientEmail3.html} />
+      </div>
+    </div>
+  </section>
+</Layout>

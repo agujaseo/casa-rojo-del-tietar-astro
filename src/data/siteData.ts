@@ -12,7 +12,7 @@ export const siteConfig = {
   phone2: ajustesJson.telefonoSecundario || '607 438 345',
   phone2Raw: '+34607438345',
   whatsapp: '34605935487',
-  email: ajustesJson.email || 'casarural@casaruralsierradeltietar.com',
+  email: ajustesJson.email || 'casarural@rojodeltietar.com',
   address: {
     street: 'Paraje el Carrascal, s/n',
     locality: 'La Iglesuela del Tiétar',

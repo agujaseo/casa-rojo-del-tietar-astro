@@ -33,7 +33,7 @@ export default config({
         }),
         email: fields.text({
           label: 'Correo Electrónico de Reservas',
-          defaultValue: 'casarural@casaruralsierradeltietar.com',
+          defaultValue: 'casarural@rojodeltietar.com',
         }),
         direccion: fields.text({
           label: 'Dirección Física',

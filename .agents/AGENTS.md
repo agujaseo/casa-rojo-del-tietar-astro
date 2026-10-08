@@ -12,7 +12,7 @@
 - **Nombre de marca:** Casa Rojo del Tiétar (`Casa Rural Rojo del Tiétar`).
 - **Dirección:** Paraje el Carrascal, s/n. 45633 La Iglesuela del Tiétar (Toledo).
 - **Teléfonos:** `605 935 487` / `607 438 345`.
-- **Email:** `casarural@casaruralsierradeltietar.com`.
+- **Email:** `casarural@rojodeltietar.com`.
 - **Activos fotográficos:** 59 fotografías reales descargadas del sitio original en `public/uploads/` + logotipo oficial `public/uploads/logo.jpg`.
 
 ## 3. Estándares de SEO, Schema y WPO
