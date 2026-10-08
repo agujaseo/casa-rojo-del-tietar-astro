@@ -52,6 +52,12 @@ export const siteConfig = {
     extraBedsCount: 3,
     distanceMadridKm: 115,
   },
+  avaibook: {
+    modo: (ajustesJson as any).avaibookModo || 'hibrido',
+    idAlojamiento: (ajustesJson as any).avaibookIdAlojamiento || '',
+    idPropietario: (ajustesJson as any).avaibookIdPropietario || '',
+    icalUrl: (ajustesJson as any).avaibookIcalUrl || '',
+  },
 };
 
 export const fullGallery = [
@@ -262,6 +268,7 @@ export const siteBrand = {
   phones: [siteConfig.phone1, siteConfig.phone2],
   email: siteConfig.email,
   address: siteConfig.address,
+  avaibook: siteConfig.avaibook,
 };
 
 export const faqs = faqsHome;

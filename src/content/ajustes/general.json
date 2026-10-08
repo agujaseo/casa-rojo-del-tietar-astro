@@ -14,5 +14,9 @@
   "fianzaEuros": 100,
   "porcentajeSenal": 25,
   "horaCheckIn": "17:00h",
-  "horaCheckOut": "14:00h"
+  "horaCheckOut": "14:00h",
+  "avaibookModo": "hibrido",
+  "avaibookIdAlojamiento": "",
+  "avaibookIdPropietario": "",
+  "avaibookIcalUrl": ""
 }

@@ -100,7 +100,8 @@ import { siteConfig } from '../data/siteData';
   weeklyPromo: siteConfig.pricing.weeklyPromo,
   whatsappNumber: siteConfig.whatsapp,
   phone1Raw: siteConfig.phone1Raw,
-  phone1Display: siteConfig.phone1
+  phone1Display: siteConfig.phone1,
+  defaultAvaiBookId: siteConfig.avaibook.idAlojamiento
 }}>
   (() => {
     const form = document.getElementById('reservation-widget-form');
@@ -145,12 +146,12 @@ import { siteConfig } from '../data/siteData';
         return;
       }
 
-      // Calcular noches de domingo a jueves (200€) vs viernes/sábado o agosto (375€)
       let baseTotal = 0;
       const cur = new Date(start);
       for (let i = 0; i < diffDays; i++) {
-        const dayOfWeek = cur.getDay(); // 5 = Viernes, 6 = Sábado
-        if (dayOfWeek === 5 || dayOfWeek === 6) {
+        const dayOfWeek = cur.getDay();
+        const month = cur.getMonth();
+        if (dayOfWeek === 5 || dayOfWeek === 6 || month === 7) {
           baseTotal += weekendRate;
         } else {
           baseTotal += weekdayRate;
@@ -167,6 +168,16 @@ import { siteConfig } from '../data/siteData';
       const totalEstimate = baseTotal + extraCost;
       const deposit = Math.round(totalEstimate * 0.25);
 
+      let avaibookId = defaultAvaiBookId;
+      try {
+        const saved = JSON.parse(localStorage.getItem('keystatic_ajustes') || '{}');
+        if (saved.avaibookIdAlojamiento) avaibookId = saved.avaibookIdAlojamiento;
+      } catch {}
+
+      const avaibookUrl = avaibookId
+        ? `https://www.avaibook.com/reservas/nueva_reserva.php?cod_alojamiento=${encodeURIComponent(avaibookId)}&f_ini=${arrival}&f_fin=${departure}&num_personas=${guests}&lang=es`
+        : '';
+
       const waMsg = `Hola, quiero consultar disponibilidad en Casa Rojo del Tiétar del ${arrival} al ${departure} (${diffDays} noches) para ${guests} personas. Presupuesto estimado web: ${totalEstimate}€ (desayuno diario incluido).`;
       const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(waMsg)}`;
 
@@ -181,14 +192,16 @@ import { siteConfig } from '../data/siteData';
             </p>
           </div>
           <div class="flex flex-wrap items-center gap-3 shrink-0">
-            <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 bg-primary text-on-primary rounded text-xs font-semibold uppercase tracking-wider hover:bg-primary-container transition-colors">
+            ${avaibookUrl ? `
+              <a href="${avaibookUrl}" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 bg-[#59614e] text-white rounded text-xs font-semibold uppercase tracking-wider hover:opacity-90 transition-opacity">
+                ⚡ Reserva Online (AvaiBook)
+              </a>
+            ` : ''}
+            <a href="/reservas?llegada=${arrival}&salida=${departure}&huespedes=${guests}" class="px-4 py-2.5 bg-primary text-on-primary rounded text-xs font-semibold uppercase tracking-wider hover:bg-primary-container transition-colors">
+              Solicitar Reserva y Recibir Presupuesto
+            </a>
+            <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 border border-primary text-primary rounded text-xs font-semibold uppercase tracking-wider hover:bg-surface-container-low transition-colors">
               Confirmar por WhatsApp
-            </a>
-            <a href="/reservas?llegada=${arrival}&salida=${departure}&huespedes=${guests}" class="px-4 py-2.5 border border-primary text-primary rounded text-xs font-semibold uppercase tracking-wider hover:bg-surface-container-low transition-colors">
-              Formulario de Reserva
-            </a>
-            <a href="tel:${phone1Raw}" class="text-xs font-semibold text-primary underline">
-              Llamar: ${phone1Display}
             </a>
           </div>
         </div>
