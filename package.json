@@ -1,0 +1,32 @@
+{
+  "name": "casa-rojo-del-tietar-astro",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Web oficial de Casa Rural Rojo del Tiétar en La Iglesuela (Toledo) — Astro 5, Keystatic CMS, Tailwind v4, Schema.org LodgingBusiness & VacationRental, WPO 100/100.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.5.5",
+    "@astrojs/react": "^4.4.1",
+    "@astrojs/sitemap": "^3.6.1",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
+    "@lucide/astro": "^1.51.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "astro": "^5.0.0",
+    "lucide-astro": "^0.556.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}

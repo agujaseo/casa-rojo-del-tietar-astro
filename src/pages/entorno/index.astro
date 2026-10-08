@@ -1,0 +1,179 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { entornoSections, distancesTable } from '../../data/siteData';
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'El Pueblo y Entorno', url: '/entorno' }
+];
+---
+
+<Layout
+  title="La Iglesuela del Tiétar y Entorno Natural | Casa Rojo del Tiétar"
+  description="Descubre qué ver y hacer en La Iglesuela del Tiétar (Toledo): Río Tiétar, Garganta de Torinas, Senda de Viriato GR-63, puentes romanos, Encina El Gacho Récord Guinness, vuelo sin motor y Red Natura 2000."
+  breadcrumbs={breadcrumbs}
+>
+  <!-- Hero Section -->
+  <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 bg-[#1c1b1a] text-white overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-45">
+      <img
+        src="/uploads/Puente_romano_de_La_Iglesuela_001.jpg"
+        alt="Puente romano sobre la Garganta de Torinas en La Iglesuela del Tiétar"
+        class="w-full h-full object-cover"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#1c1b1a] via-[#1c1b1a]/70 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-300">
+          <li><a href="/" class="hover:text-white transition-colors">Inicio</a></li>
+          <li>/</li>
+          <li class="text-[#ffb4a0] font-semibold">El Pueblo y Entorno</li>
+        </ol>
+      </nav>
+
+      <div class="max-w-3xl">
+        <span class="inline-block px-3.5 py-1.5 rounded-full bg-[#59614e]/90 border border-[#dde6cd]/30 text-[#dde6cd] text-xs font-bold uppercase tracking-widest mb-4">
+          Valle del Tiétar · Sierra de San Vicente · Vista a Gredos
+        </span>
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          La Iglesuela del Tiétar: <span class="italic font-normal text-[#ffb4a0]">Naturaleza, Historia y Agua</span>
+        </h1>
+        <p class="text-stone-200 text-lg leading-relaxed">
+          Situada a 521 metros de altitud entre encinares centenarios, en la frontera natural de Toledo, Ávila y Madrid, <strong>La Iglesuela del Tiétar</strong> es un enclave privilegiado de la Red Natura 2000 donde el Río Tiétar y la Garganta de Torinas esculpen paisajes inolvidables.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Highlights Bar -->
+  <section class="py-10 bg-[#703829] text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div>
+          <span class="block font-serif text-3xl font-bold text-[#ffb4a0]">521 m</span>
+          <span class="text-xs uppercase tracking-widest text-[#ffdbd1]">Altitud en el Valle del Tiétar</span>
+        </div>
+        <div>
+          <span class="block font-serif text-3xl font-bold text-[#ffb4a0]">GR-63</span>
+          <span class="text-xs uppercase tracking-widest text-[#ffdbd1]">Senda de Viriato (Etapas 16 y 17)</span>
+        </div>
+        <div>
+          <span class="block font-serif text-3xl font-bold text-[#ffb4a0]">600 Años</span>
+          <span class="text-xs uppercase tracking-widest text-[#ffdbd1]">Encina El Gacho (Récord Guinness)</span>
+        </div>
+        <div>
+          <span class="block font-serif text-3xl font-bold text-[#ffb4a0]">~1h 15m</span>
+          <span class="text-xs uppercase tracking-widest text-[#ffdbd1]">Desde Madrid (118 km)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- All 11 Comprehensive Sections from casaruralsierradeltietar.com/el-pueblo/ -->
+  <section class="py-24 bg-[#fff8f5]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-16">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#703829] block mb-3">Guía Completa del Territorio</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mb-4">
+          Patrimonio, Rutas y Naturaleza en La Iglesuela del Tiétar
+        </h2>
+        <p class="text-stone-600">
+          Recopilación íntegra de los tesoros naturales, monumentales y culturales que rodean <strong>Casa Rojo del Tiétar</strong>.
+        </p>
+      </div>
+
+      <div class="space-y-20">
+        {entornoSections.map((section, idx) => (
+          <article id={section.id} class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-white rounded-3xl p-6 sm:p-10 border border-stone-200/80 shadow-xs">
+            <div class={`lg:col-span-5 ${idx % 2 === 1 ? 'lg:order-2' : ''}`}>
+              <div class="relative rounded-2xl overflow-hidden shadow-md aspect-[4/3]">
+                <img
+                  src={section.image}
+                  alt={section.title}
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                />
+                <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-stone-900/80 backdrop-blur-xs text-[#ffb4a0] text-xs font-bold uppercase tracking-wider">
+                  {section.subtitle}
+                </span>
+              </div>
+            </div>
+            <div class={`lg:col-span-7 space-y-4 ${idx % 2 === 1 ? 'lg:order-1' : ''}`}>
+              <div class="flex items-center gap-3">
+                <span class="font-serif text-sm font-bold text-[#703829] px-3 py-1 rounded-full bg-[#ffdbd1]/60">
+                  0{idx + 1}
+                </span>
+                <span class="text-xs font-bold uppercase tracking-widest text-stone-500">{section.subtitle}</span>
+              </div>
+              <h3 class="font-serif text-2xl sm:text-3xl font-bold text-stone-900">
+                {section.title}
+              </h3>
+              <p class="text-stone-600 leading-relaxed text-base">
+                {section.content}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Mosaic of La Iglesuela -->
+  <section class="py-20 bg-[#f7f3ee] content-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-[#703829] block mb-2">Estampas del Valle</span>
+        <h2 class="font-serif text-3xl font-bold text-stone-900">Galería de La Iglesuela del Tiétar</h2>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          { src: '/uploads/Puente_romano_de_La_Iglesuela_001.jpg', label: 'Puente Romano sobre la Garganta de Torinas' },
+          { src: '/uploads/PANORAMICA.-LA-IGLESUELA-DEL-TIETAR.jpg', label: 'Panorámica de La Iglesuela y Sierra de Gredos' },
+          { src: '/uploads/pueblo_vista_rojodeltietar.jpg', label: 'Dehesas y Encinares del Valle del Tiétar' },
+          { src: '/uploads/30132108.700x525.jpg', label: 'Patrimonio Histórico de La Iglesuela' },
+          { src: '/uploads/5-Pozos-Casco-Urbano-Iglesuela.jpg', label: 'Pozos Centenarios de Piedra Granítica' },
+          { src: '/uploads/6F277BD0-C8C2-E22F-CA2F536CFE2235C3.jpg', label: 'Naturaleza Red Natura 2000 y Encina El Gacho' },
+          { src: '/uploads/2022-05-03.jpg', label: 'Entorno Natural y Vuelo a Vela en el Tiétar' },
+          { src: '/uploads/escapada_talavera_de_la_reina_puente_viejo_romano_1600x1090.jpg', label: 'Puentes Históricos de la Comarca' }
+        ].map((img) => (
+          <figure class="group relative rounded-2xl overflow-hidden aspect-[4/3] shadow-xs">
+            <img src={img.src} alt={img.label} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+            <figcaption class="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/85 via-black/50 to-transparent text-white text-xs font-medium">
+              {img.label}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Distances Table -->
+  <section class="py-20 bg-[#fff8f5]">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl p-8 lg:p-12 border border-stone-200/80 shadow-sm">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <span class="text-xs font-bold uppercase tracking-widest text-[#703829] block mb-2">Ubicación Estratégica</span>
+          <h2 class="font-serif text-3xl font-bold text-stone-900 mb-3">
+            Tabla de Distancias desde La Iglesuela del Tiétar
+          </h2>
+          <p class="text-stone-600 text-sm">
+            En el corazón de la comarca de la Sierra de San Vicente, a un paso de Madrid, Ávila y Toledo.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          {distancesTable.map((item) => (
+            <div class="p-4 rounded-2xl bg-[#fff8f5] border border-stone-200/60 text-center">
+              <span class="block font-serif text-2xl font-bold text-[#703829] mb-1">{item.distance}</span>
+              <span class="text-xs font-semibold text-stone-700">{item.place}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

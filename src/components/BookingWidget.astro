@@ -1,0 +1,199 @@
+---
+import { siteConfig } from '../data/siteData';
+---
+
+<div class="w-full bg-surface-container-lowest rounded-xl p-6 md:p-8 shadow-ambient border border-outline-variant/30">
+  <form
+    id="reservation-widget-form"
+    class="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-5 items-end"
+  >
+    <!-- Fecha de Llegada -->
+    <div class="md:col-span-3 space-y-1.5">
+      <label for="widget-arrival" class="block label-caps text-secondary">
+        Fecha de Llegada (Check-in 17:00h)
+      </label>
+      <div class="relative bg-surface-container-low rounded px-3.5 py-2.5 flex items-center gap-2 border border-outline-variant/40 focus-within:border-primary">
+        <input
+          id="widget-arrival"
+          name="arrival"
+          type="date"
+          required
+          class="bg-transparent text-sm text-on-surface w-full focus:outline-none"
+        />
+      </div>
+    </div>
+
+    <!-- Fecha de Salida -->
+    <div class="md:col-span-3 space-y-1.5">
+      <label for="widget-departure" class="block label-caps text-secondary">
+        Fecha de Salida (Check-out 14:00h)
+      </label>
+      <div class="relative bg-surface-container-low rounded px-3.5 py-2.5 flex items-center gap-2 border border-outline-variant/40 focus-within:border-primary">
+        <input
+          id="widget-departure"
+          name="departure"
+          type="date"
+          required
+          class="bg-transparent text-sm text-on-surface w-full focus:outline-none"
+        />
+      </div>
+    </div>
+
+    <!-- Huéspedes -->
+    <div class="md:col-span-3 space-y-1.5">
+      <label for="widget-guests" class="block label-caps text-secondary">
+        Huéspedes (10 - 13 Plazas)
+      </label>
+      <div class="relative bg-surface-container-low rounded px-3.5 py-2.5 flex items-center gap-2 border border-outline-variant/40 focus-within:border-primary">
+        <select
+          id="widget-guests"
+          name="guests"
+          class="bg-transparent text-sm text-on-surface w-full focus:outline-none cursor-pointer"
+        >
+          <option value="10">Hasta 10 huéspedes (Casa íntegra)</option>
+          <option value="11">11 huéspedes (+1 supletoria · +10€/noche)</option>
+          <option value="12">12 huéspedes (+2 supletorias · +20€/noche)</option>
+          <option value="13">13 huéspedes (+3 supletorias · +30€/noche)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Botón Consultar -->
+    <div class="md:col-span-3">
+      <button
+        type="submit"
+        class="w-full h-[44px] bg-primary-container text-on-primary rounded text-sm font-medium tracking-wide hover:bg-primary transition-colors flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+      >
+        <span>Consultar Disponibilidad</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </form>
+
+  <!-- Garantías incluidas -->
+  <div class="mt-4 pt-4 border-t border-outline-variant/25 flex flex-wrap items-center justify-between gap-3 text-secondary text-xs">
+    <div class="flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+      <span><strong>Estancia mínima:</strong> {siteConfig.pricing.minNights} noches · Alquiler íntegro (5 suites)</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+      <span><strong>Desayuno casero diario</strong> incluido para todos los huéspedes</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+      <span><strong>Leña gratuita</strong> (chimenea y barbacoa) · <strong>Pet-Friendly</strong></span>
+    </div>
+  </div>
+
+  <!-- Respuesta interactiva de presupuesto y reserva directa -->
+  <div
+    id="widget-booking-result"
+    class="hidden mt-4 p-4 bg-surface-container rounded-lg border border-primary/20 text-sm text-on-surface"
+  ></div>
+</div>
+
+<script is:inline define:vars={{
+  weekdayRate: siteConfig.pricing.weekdayNight,
+  weekendRate: siteConfig.pricing.weekendNight,
+  extraBedRate: siteConfig.pricing.extraBed,
+  weeklyPromo: siteConfig.pricing.weeklyPromo,
+  whatsappNumber: siteConfig.whatsapp,
+  phone1Raw: siteConfig.phone1Raw,
+  phone1Display: siteConfig.phone1
+}}>
+  (() => {
+    const form = document.getElementById('reservation-widget-form');
+    const arrivalInput = document.getElementById('widget-arrival');
+    const departureInput = document.getElementById('widget-departure');
+    const guestsSelect = document.getElementById('widget-guests');
+    const resultBox = document.getElementById('widget-booking-result');
+
+    if (!form || !arrivalInput || !departureInput || !guestsSelect || !resultBox) return;
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    arrivalInput.min = todayStr;
+    departureInput.min = todayStr;
+
+    arrivalInput.addEventListener('change', () => {
+      if (arrivalInput.value) {
+        const minOut = new Date(arrivalInput.value);
+        minOut.setDate(minOut.getDate() + 2);
+        const minOutStr = minOut.toISOString().split('T')[0];
+        departureInput.min = minOutStr;
+        if (!departureInput.value || departureInput.value < minOutStr) {
+          departureInput.value = minOutStr;
+        }
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const arrival = arrivalInput.value;
+      const departure = departureInput.value;
+      const guests = parseInt(guestsSelect.value, 10) || 10;
+
+      if (!arrival || !departure) return;
+
+      const start = new Date(arrival);
+      const end = new Date(departure);
+      const diffDays = Math.round((end - start) / (1000 * 60 * 60 * 24));
+
+      if (diffDays < 2) {
+        resultBox.innerHTML = `<p class="text-primary font-medium">La estancia mínima en Casa Rojo del Tiétar es de <strong>2 noches</strong>. Por favor selecciona una fecha de salida posterior.</p>`;
+        resultBox.classList.remove('hidden');
+        return;
+      }
+
+      // Calcular noches de domingo a jueves (200€) vs viernes/sábado o agosto (375€)
+      let baseTotal = 0;
+      const cur = new Date(start);
+      for (let i = 0; i < diffDays; i++) {
+        const dayOfWeek = cur.getDay(); // 5 = Viernes, 6 = Sábado
+        if (dayOfWeek === 5 || dayOfWeek === 6) {
+          baseTotal += weekendRate;
+        } else {
+          baseTotal += weekdayRate;
+        }
+        cur.setDate(cur.getDate() + 1);
+      }
+
+      if (diffDays === 7 && baseTotal > weeklyPromo) {
+        baseTotal = weeklyPromo;
+      }
+
+      const extraGuests = Math.max(0, guests - 10);
+      const extraCost = extraGuests * extraBedRate * diffDays;
+      const totalEstimate = baseTotal + extraCost;
+      const deposit = Math.round(totalEstimate * 0.25);
+
+      const waMsg = `Hola, quiero consultar disponibilidad en Casa Rojo del Tiétar del ${arrival} al ${departure} (${diffDays} noches) para ${guests} personas. Presupuesto estimado web: ${totalEstimate}€ (desayuno diario incluido).`;
+      const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(waMsg)}`;
+
+      resultBox.innerHTML = `
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <p class="font-serif text-lg text-primary font-medium">
+              Estancia de ${diffDays} noches para ${guests} huéspedes · Estimación: <strong>${totalEstimate} €</strong> (Desayuno diario incluido)
+            </p>
+            <p class="text-xs text-on-surface-variant">
+              Señal de reserva (25%): <strong>${deposit} €</strong> · Cancelación 100% gratuita hasta 7 días antes de la llegada.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-3 shrink-0">
+            <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 bg-primary text-on-primary rounded text-xs font-semibold uppercase tracking-wider hover:bg-primary-container transition-colors">
+              Confirmar por WhatsApp
+            </a>
+            <a href="/reservas?llegada=${arrival}&salida=${departure}&huespedes=${guests}" class="px-4 py-2.5 border border-primary text-primary rounded text-xs font-semibold uppercase tracking-wider hover:bg-surface-container-low transition-colors">
+              Formulario de Reserva
+            </a>
+            <a href="tel:${phone1Raw}" class="text-xs font-semibold text-primary underline">
+              Llamar: ${phone1Display}
+            </a>
+          </div>
+        </div>
+      `;
+      resultBox.classList.remove('hidden');
+    });
+  })();
+</script>

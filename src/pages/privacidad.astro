@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteBrand } from '../data/siteData';
+---
+
+<Layout
+  title="Política de Privacidad | Casa Rojo del Tiétar"
+  description="Política de protección de datos personales (RGPD y LOPDGDD) de Casa Rojo del Tiétar."
+  noindex={true}
+>
+  <section class="pt-36 pb-24 bg-[#fff8f5]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl p-8 sm:p-12 border border-stone-200/80 shadow-xs prose prose-stone max-w-none">
+        <h1 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mb-6">Política de Privacidad</h1>
+        <p>En <strong>{siteBrand.name}</strong> garantizamos la protección y confidencialidad de los datos personales que nos proporcionen nuestros huéspedes y usuarios de acuerdo con el Reglamento General de Protección de Datos (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD).</p>
+        <h2 class="font-serif text-2xl font-bold mt-8">1. Responsable del Tratamiento</h2>
+        <ul>
+          <li><strong>Titular:</strong> {siteBrand.name}</li>
+          <li><strong>Dirección:</strong> {siteBrand.address.street}, {siteBrand.address.postalCode} {siteBrand.address.locality} ({siteBrand.address.region})</li>
+          <li><strong>Email de contacto:</strong> {siteBrand.email}</li>
+          <li><strong>Teléfono:</strong> {siteBrand.phones[0]}</li>
+        </ul>
+        <h2 class="font-serif text-2xl font-bold mt-8">2. Finalidad del Tratamiento</h2>
+        <p>Los datos facilitados mediante el formulario de contacto, correo electrónico o WhatsApp se utilizan exclusivamente para gestionar las consultas de disponibilidad, presupuestos y reservas de alojamiento rural en {siteBrand.name}, así como el cumplimiento de las obligaciones legales de registro de viajeros.</p>
+        <h2 class="font-serif text-2xl font-bold mt-8">3. Derechos de los Interesados</h2>
+        <p>Puede ejercer sus derechos de acceso, rectificación, supresión, limitación y oposición enviando una comunicación escrita al correo electrónico <a href={`mailto:${siteBrand.email}`}>{siteBrand.email}</a>.</p>
+      </div>
+    </div>
+  </section>
+</Layout>

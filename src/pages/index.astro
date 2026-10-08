@@ -1,0 +1,754 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BookingWidget from '../components/BookingWidget.astro';
+import { siteConfig, faqsHome } from '../data/siteData';
+import { getCollection } from 'astro:content';
+
+const allEstancias = await getCollection('estancias');
+const sortedEstancias = allEstancias.sort((a, b) => (a.data.orden ?? 99) - (b.data.orden ?? 99));
+const suites = sortedEstancias.filter((e) => e.data.tipo.startsWith('suite'));
+
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<Layout
+  title="Casa Rojo del Tiétar | Casa Rural en La Iglesuela (Toledo) para 10-13 Personas con Desayuno Incluido"
+  description="Casa Rural Rojo del Tiétar en La Iglesuela (Valle del Tiétar, a 115 km de Madrid). Antiguo pajar de piedra de 240 m² con 5 habitaciones tipo suite con baño privado, bañera exenta, chimenea, barbacoa con leña gratis y desayuno casero incluido."
+  includeFaqSchema={true}
+>
+  <!-- HERO SECTION CON RESERVA FLOTANTE ELEGANTE (Diseño Stitch Casa Rojo del Tiétar) -->
+  <section class="relative w-full overflow-hidden bg-surface-container-low">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10 pt-8 pb-16 lg:pt-14 lg:pb-24">
+      <!-- Overline Contextual -->
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-8 h-[1px] bg-outline"></span>
+        <span class="label-caps text-secondary">
+          Valle del Tiétar · La Iglesuela (Toledo) · A 115 km del centro de Madrid
+        </span>
+      </div>
+
+      <!-- Título Editorial & Descripción -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-10">
+        <div class="lg:col-span-8">
+          <h1 class="font-serif text-4xl sm:text-5xl lg:text-[56px] text-primary tracking-tight font-normal leading-[1.08]">
+            Casa Rojo del Tiétar: tu refugio de piedra y calma con vistas a Gredos
+          </h1>
+        </div>
+        <div class="lg:col-span-4 lg:pl-4">
+          <p class="text-[17px] leading-[28px] text-on-surface-variant font-light">
+            Antiguo pajar tradicional rehabilitado en La Iglesuela con <strong>capacidad de 10 a 13 personas</strong>, 5 dormitorios tipo suite con baño privado, desayuno suculento diario incluido y patio con barbacoa.
+          </p>
+        </div>
+      </div>
+
+      <!-- Hero Visual Grid: Imagen Principal LCP + Suite con Bañera + Tarjeta Desayuno -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10 items-stretch">
+        <div class="lg:col-span-8 rounded-xl overflow-hidden shadow-sm relative group h-[380px] md:h-[500px] bg-surface-container">
+          <img
+            src="/uploads/Casa-roja-con-un-bonito-atardecer.png"
+            alt="Fachada de piedra de Casa Rural Rojo del Tiétar al atardecer en La Iglesuela (Toledo)"
+            width="1280"
+            height="612"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/75 via-inverse-surface/15 to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 text-on-primary flex flex-col md:flex-row md:items-end justify-between gap-2">
+            <div>
+              <p class="label-caps text-primary-fixed">Vistas Despejadas · Ubicación Sin Ruidos</p>
+              <p class="font-serif text-2xl text-on-primary">Sierra de Gredos &amp; Monte del Piélago</p>
+            </div>
+            <span class="text-xs text-surface-container-high/95 bg-inverse-surface/50 backdrop-blur-sm px-3 py-1.5 rounded">
+              Junto a gran pradera pública y pista deportiva
+            </span>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 flex flex-col justify-between gap-6">
+          <a href="/estancias" class="h-[238px] rounded-xl overflow-hidden shadow-sm relative group block bg-surface-container">
+            <img
+              src="/uploads/hab_ejido_cama_rojodeltietar-570x320-1.jpg"
+              alt="Habitación Suite Ejido con bañera exenta integrada en Casa Rojo del Tiétar"
+              width="570"
+              height="320"
+              loading="eager"
+              decoding="async"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/70 via-transparent to-transparent"></div>
+            <div class="absolute bottom-4 left-5 right-5 flex items-center justify-between text-on-primary">
+              <span class="text-sm font-medium">5 Suites con baño (2 con bañera exenta)</span>
+              <span class="text-xs uppercase tracking-wider underline">Ver estancias →</span>
+            </div>
+          </a>
+
+          <div class="h-[238px] bg-surface-container rounded-xl p-6 flex flex-col justify-between border border-outline-variant/30">
+            <div class="space-y-1.5">
+              <span class="label-caps text-secondary">La Experiencia Incluida</span>
+              <h2 class="font-serif text-2xl text-primary">Desayuno suculento a diario</h2>
+              <p class="text-xs leading-relaxed text-on-surface-variant pt-1">
+                Incluido en el alojamiento por cada día de estancia y para todos los huéspedes: café en grano recién molido, bizcocho casero, huevos, panes, leche, mantequilla, mermelada y frutas variadas.
+              </p>
+            </div>
+            <div class="flex items-center justify-between text-secondary pt-2 border-t border-outline-variant/30 text-xs font-semibold">
+              <span>☕ Alojamiento + Desayuno Mediterráneo</span>
+              <a href="/tarifas" class="text-primary hover:underline">Desde 200 €/noche →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Disponibilidad & Reserva Editorial -->
+      <BookingWidget />
+    </div>
+  </section>
+
+  <!-- SECCIÓN 2: LA CASA — MEMORIA, PIEDRA Y ARQUITECTURA -->
+  <section class="w-full py-20 lg:py-28 bg-surface cv-auto">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <!-- Narrativa arquitectónica fiel a casaruralsierradeltietar.com -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="space-y-2">
+            <span class="label-caps text-secondary">
+              La Casa · Capacidad de 10 a 13 Personas
+            </span>
+            <h2 class="font-serif text-3xl sm:text-[40px] text-primary leading-tight">
+              El encanto de un antiguo pajar de piedra en el corazón del Tiétar
+            </h2>
+          </div>
+          <p class="text-[16px] leading-relaxed text-on-surface-variant">
+            En <strong>La Iglesuela</strong>, a tan solo <strong>115 km del centro de Madrid</strong> y en pleno corazón del Valle del Tiétar, se ubica la espectacular <strong>Casa Rural Rojo del Tiétar</strong>, con magníficas vistas a la Sierra de Gredos y al Monte del Piélago. Su ubicación dentro de la población es inmejorable: en una zona tranquila y sin ruidos, junto a una gran pradera pública que invita a realizar infinidad de actividades al aire libre y a pie de cualquier establecimiento del pueblo.
+          </p>
+          <p class="text-[15px] leading-relaxed text-on-surface-variant">
+            La casa es fruto de la remodelación de un <strong>antiguo pajar de arquitectura típica de la zona</strong>. Aunque ha sido reformada en su totalidad con suelo radiante frío-calor y equipamiento moderno, conserva intacta su esencia en las <strong>paredes de piedra originales</strong> que se han mantenido, concediendo a la vivienda un encanto único.
+          </p>
+
+          <!-- Indicadores clave -->
+          <div class="pt-2 grid grid-cols-2 sm:grid-cols-3 gap-3.5">
+            <div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant/25">
+              <span class="font-serif text-2xl text-primary block">240 m²</span>
+              <span class="text-xs text-secondary">2 plantas de 120 m²</span>
+            </div>
+            <div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant/25">
+              <span class="font-serif text-2xl text-primary block">5 Suites</span>
+              <span class="text-xs text-secondary">5 baños + 1 aseo</span>
+            </div>
+            <div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant/25 col-span-2 sm:col-span-1">
+              <span class="font-serif text-2xl text-primary block">10 - 13 Plazas</span>
+              <span class="text-xs text-secondary">+3 supletorias y cuna</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Composición Visual Editorial Asimétrica con Fotos Reales -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
+          <div class="sm:col-span-7 rounded-xl overflow-hidden shadow-sm h-[380px] sm:h-[460px] bg-surface-container">
+            <img
+              src="/uploads/casa_ejido_rojodeltietar-min.jpg"
+              alt="Muros de piedra originales y arquitectura de Casa Rojo del Tiétar en La Iglesuela"
+              width="980"
+              height="735"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="sm:col-span-5 space-y-5">
+            <div class="h-[220px] rounded-xl overflow-hidden shadow-sm bg-surface-container">
+              <img
+                src="/uploads/pergola_rojodeltietar-570x320-1.jpg"
+                alt="Patio exterior privado con pérgola y barbacoa en Casa Rojo del Tiétar"
+                width="570"
+                height="320"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6 bg-surface-container rounded-xl border border-outline-variant/30">
+              <span class="label-caps text-secondary block mb-1">Exterior y Barbacoa</span>
+              <p class="font-serif text-xl text-primary">Patio Privado de 90 m²</p>
+              <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+                Pérgola con mesa para 12 comensales, barbacoa con leña gratuita, ducha exterior caliente/fría y acceso directo a la pradera y piscina municipal.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 3: DISTRIBUCIÓN EN DOS PLANTAS Y EXTERIOR -->
+  <section class="w-full py-20 lg:py-28 bg-surface-container-low cv-auto">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <div class="max-w-2xl mb-14 space-y-3">
+        <span class="label-caps text-secondary">
+          Distribución y Comodidades
+        </span>
+        <h2 class="font-serif text-3xl sm:text-[40px] text-primary leading-tight">
+          Diseñada para compartir y descansar con total intimidad
+        </h2>
+        <p class="text-base text-on-surface-variant font-light">
+          Dos plantas de 120 m² cada una que combinan amplias zonas de reunión familiar con cinco dormitorios tipo suite, todos con cuarto de baño privado.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Tarjeta 1: Planta Baja -->
+        <article class="bg-surface rounded-xl overflow-hidden shadow-sm border border-outline-variant/25 flex flex-col justify-between">
+          <div>
+            <div class="h-60 relative overflow-hidden bg-surface-container">
+              <img
+                src="/uploads/salonycocina_rojodeltietar.jpg"
+                alt="Salón comedor de 68,60 m² y cocina abierta en la planta baja de Casa Rojo del Tiétar"
+                width="980"
+                height="552"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+              <span class="absolute top-4 left-4 bg-surface/95 backdrop-blur-sm text-primary label-caps px-3 py-1 rounded">
+                Planta Baja · 120 m²
+              </span>
+            </div>
+            <div class="p-6 md:p-8 space-y-4">
+              <h3 class="font-serif text-2xl text-primary">Espacios para Compartir</h3>
+              <p class="text-sm text-on-surface-variant leading-relaxed">
+                El corazón de la casa, conectado directamente al patio mediante dos grandes ventanales plegables tipo fuelle.
+              </p>
+              <ul class="space-y-2.5 pt-2 text-xs text-on-surface">
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Salón-Comedor (68,60 m²):</strong> Chimenea de leña, TV 49”, 2 sillones de 3 plazas, 1 sillón de 4 plazas y mesa de madera para 12 comensales.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Cocina Abierta Equipada:</strong> Cafetera de grano recién molido, inducción, horno, lavavajillas, microondas y menaje completo.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Despensa (3,80 m²):</strong> Frigorífico y congelador individuales verticales de gran capacidad y lavadora/secadora.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Suite Pajar Adaptada PMR:</strong> 2 camas de 90 cm y baño propio accesible de 4,75 m² + <strong>1 Aseo adicional</strong> de cortesía.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="px-6 md:px-8 pb-6 pt-2">
+            <a href="/estancias" class="label-caps text-primary hover:underline">
+              Ver detalles de Planta Baja →
+            </a>
+          </div>
+        </article>
+
+        <!-- Tarjeta 2: Planta Superior -->
+        <article class="bg-surface rounded-xl overflow-hidden shadow-sm border border-outline-variant/25 flex flex-col justify-between">
+          <div>
+            <div class="h-60 relative overflow-hidden bg-surface-container">
+              <img
+                src="/uploads/hab_torinas_cama_rojodeltietar-563x320-1.jpg"
+                alt="Dormitorio tipo suite en la planta superior de Casa Rojo del Tiétar"
+                width="563"
+                height="320"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+              <span class="absolute top-4 left-4 bg-surface/95 backdrop-blur-sm text-primary label-caps px-3 py-1 rounded">
+                Planta Superior · 120 m²
+              </span>
+            </div>
+            <div class="p-6 md:p-8 space-y-4">
+              <h3 class="font-serif text-2xl text-primary">El Descanso: 4 Suites</h3>
+              <p class="text-sm text-on-surface-variant leading-relaxed">
+                Cuatro dormitorios tipo suite independientes en la planta alta, combinando piedra tradicional, suelo radiante y camas de alta gama.
+              </p>
+              <ul class="space-y-2.5 pt-2 text-xs text-on-surface">
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Suites Ejido y Gredos (16 m²):</strong> Cama de matrimonio de 150 cm, baño propio con ducha y <strong>bañera exenta dentro de la habitación</strong>.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Suites Torinas y Piélago (20 m²):</strong> Cama King de 160 cm, baño privado con plato de ducha y <strong>pequeño balcón al patio</strong>.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Máximo Confort:</strong> Colchones viscoelásticos, sábanas 100% algodón, edredón nórdico y TV de 42” en cada suite.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Capacidad Ampliable:</strong> 3 camas supletorias de 90 cm (10 €/cama con toallas) y cuna de viaje.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="px-6 md:px-8 pb-6 pt-2">
+            <a href="/estancias" class="label-caps text-primary hover:underline">
+              Explorar las 5 Suites →
+            </a>
+          </div>
+        </article>
+
+        <!-- Tarjeta 3: El Exterior -->
+        <article class="bg-surface rounded-xl overflow-hidden shadow-sm border border-outline-variant/25 flex flex-col justify-between">
+          <div>
+            <div class="h-60 relative overflow-hidden bg-surface-container">
+              <img
+                src="/uploads/barbacoa_completa_rojodeltietar-570x320-1.jpg"
+                alt="Barbacoa exterior con leña gratuita y patio en Casa Rojo del Tiétar"
+                width="570"
+                height="320"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+              <span class="absolute top-4 left-4 bg-surface/95 backdrop-blur-sm text-primary label-caps px-3 py-1 rounded">
+                Patio Exterior · Barbacoa
+              </span>
+            </div>
+            <div class="p-6 md:p-8 space-y-4">
+              <h3 class="font-serif text-2xl text-primary">Tu Paraíso Privado</h3>
+              <p class="text-sm text-on-surface-variant leading-relaxed">
+                Un recinto exterior muy confortable para disfrutar de barbacoas al aire libre, tardes de sol y noches estrelladas.
+              </p>
+              <ul class="space-y-2.5 pt-2 text-xs text-on-surface">
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Pérgola y Comedor Exterior:</strong> Mobiliario compuesto de amplia mesa y 12 sillas bajo pérgola.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Barbacoa con Leña Gratis:</strong> Equipada con leña gratuita tanto para la barbacoa como para la chimenea interior.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Ducha Exterior Caliente/Fría:</strong> Ideal para refrescarse en los meses cálidos.</span>
+                </li>
+                <li class="flex items-start gap-2.5">
+                  <span class="text-primary font-bold">•</span>
+                  <span><strong>Guardabicis y Piscina:</strong> 2 almacenes para bicicletas, acceso directo desde la calle y piscina municipal gratis a 200 m.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="px-6 md:px-8 pb-6 pt-2">
+            <a href="/servicios" class="label-caps text-primary hover:underline">
+              Ver todos los servicios →
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 4: LAS 5 SUITES DE CASA ROJO DEL TIÉTAR (CMS KEYSTATIC) -->
+  <section class="w-full py-20 lg:py-28 bg-surface cv-auto">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div>
+          <span class="label-caps text-secondary">Privacidad Total para Grupos</span>
+          <h2 class="font-serif text-3xl sm:text-[40px] text-primary mt-2">
+            5 Dormitorios Tipo Suite con Baño Propio
+          </h2>
+        </div>
+        <a
+          href="/estancias"
+          class="inline-flex items-center gap-2 px-5 py-2.5 bg-surface-container text-primary rounded text-xs font-semibold uppercase tracking-wider hover:bg-surface-container-high transition-colors"
+        >
+          <span>Ver Galería Completa y Zonas Comunes</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        {suites.map((suite) => (
+          <article class="bg-surface-container-low rounded-xl overflow-hidden border border-outline-variant/30 flex flex-col justify-between group hover:shadow-ambient transition-all">
+            <div>
+              <div class="h-56 relative overflow-hidden bg-surface-container">
+                <img
+                  src={suite.data.imagenPrincipal}
+                  alt={suite.data.title}
+                  width="570"
+                  height="320"
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <span class="absolute top-3 left-3 bg-surface/95 text-primary label-caps px-2.5 py-1 rounded">
+                  {suite.data.planta}
+                </span>
+                <span class="absolute bottom-3 right-3 bg-primary/90 text-on-primary text-[11px] font-medium px-2.5 py-1 rounded">
+                  {suite.data.superficie}
+                </span>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="label-caps text-secondary">{suite.data.destacado}</div>
+                <h3 class="font-serif text-2xl text-primary">{suite.data.title}</h3>
+                <p class="text-xs text-on-surface-variant leading-relaxed">
+                  {suite.data.description}
+                </p>
+                <div class="pt-2 border-t border-outline-variant/25 text-xs text-on-surface space-y-1">
+                  <p><strong>Camas:</strong> {suite.data.camas}</p>
+                  <p><strong>Capacidad:</strong> {suite.data.capacidad}</p>
+                </div>
+              </div>
+            </div>
+            <div class="px-6 pb-5">
+              <a href="/estancias" class="text-xs font-semibold text-primary uppercase tracking-wider hover:underline">
+                Ver fotos y equipamiento →
+              </a>
+            </div>
+          </article>
+        ))}
+
+        <!-- Tarjeta Resumen Capacidad y Tarifas -->
+        <div class="bg-primary text-on-primary rounded-xl p-7 flex flex-col justify-between">
+          <div class="space-y-4">
+            <span class="label-caps text-primary-fixed">Alquiler Íntegro con Desayuno</span>
+            <h3 class="font-serif text-3xl leading-tight">
+              Toda la casa en exclusiva para vuestro grupo
+            </h3>
+            <p class="text-sm text-primary-fixed/90 leading-relaxed">
+              Alquila Casa Rojo del Tiétar al completo (hasta 13 huéspedes) con desayuno casero diario incluido, leña gratuita y trato directo sin comisiones.
+            </p>
+            <div class="space-y-2 pt-2 border-t border-white/15 text-xs">
+              <div class="flex justify-between">
+                <span>Domingo a Jueves:</span>
+                <strong class="text-sm">{siteConfig.pricing.weekdayNight} € / noche</strong>
+              </div>
+              <div class="flex justify-between">
+                <span>Viernes, Sábado y Agosto:</span>
+                <strong class="text-sm">{siteConfig.pricing.weekendNight} € / noche</strong>
+              </div>
+              <div class="flex justify-between">
+                <span>Promoción Semana Completa:</span>
+                <strong class="text-sm">{siteConfig.pricing.weeklyPromo} € / semana</strong>
+              </div>
+              <div class="flex justify-between">
+                <span>Cama supletoria (con toallas):</span>
+                <strong class="text-sm">{siteConfig.pricing.extraBed} € / cama</strong>
+              </div>
+            </div>
+          </div>
+          <div class="pt-6 flex flex-col gap-2.5">
+            <a
+              href="/reservas"
+              class="w-full py-3 bg-surface text-primary text-center rounded text-xs font-semibold uppercase tracking-wider hover:bg-surface-container transition-colors"
+            >
+              Reservar Fechas Ahora
+            </a>
+            <a
+              href="/tarifas"
+              class="w-full py-2.5 border border-white/30 text-on-primary text-center rounded text-xs font-semibold uppercase tracking-wider hover:bg-white/10 transition-colors"
+            >
+              Ver Condiciones y Promociones
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 5: EQUIPAMIENTO Y SERVICIOS INCLUIDOS -->
+  <section class="w-full py-20 lg:py-28 bg-surface-container-low cv-auto">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+        <div>
+          <span class="label-caps text-secondary">Equipamiento y Servicios Incluidos</span>
+          <h2 class="font-serif text-3xl sm:text-[40px] text-primary mt-2">
+            Todo dispuesto para que solo tengas que disfrutar
+          </h2>
+        </div>
+        <p class="text-sm text-on-surface-variant max-w-md">
+          Incluye todo el menaje necesario para los huéspedes, toallas, sábanas 100% algodón, jabones, lavadora/secadora, barbacoa, leña y desayuno diario.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-6 bg-surface rounded-xl border border-outline-variant/25 space-y-2.5">
+          <span class="text-2xl">🥐</span>
+          <h3 class="font-serif text-xl text-primary">Desayuno Mediterráneo</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Incluido cada día para todos: café en grano recién molido, Cola Cao, leche, huevos, panes, bizcocho casero, mantequilla, mermelada y frutas variadas.
+          </p>
+        </div>
+
+        <div class="p-6 bg-surface rounded-xl border border-outline-variant/25 space-y-2.5">
+          <span class="text-2xl">🔥</span>
+          <h3 class="font-serif text-xl text-primary">Chimenea y Leña Gratis</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Leña gratuita incluida tanto para la chimenea del salón como para la barbacoa exterior del patio.
+          </p>
+        </div>
+
+        <div class="p-6 bg-surface rounded-xl border border-outline-variant/25 space-y-2.5">
+          <span class="text-2xl">🛁</span>
+          <h3 class="font-serif text-xl text-primary">5 Baños + Bañeras Exentas</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Toallas suaves, secador de pelo en cada baño y artículos de aseo de cortesía (champú, gel, jabón y crema hidratante).
+          </p>
+        </div>
+
+        <div class="p-6 bg-surface rounded-xl border border-outline-variant/25 space-y-2.5">
+          <span class="text-2xl">🌡️</span>
+          <h3 class="font-serif text-xl text-primary">Suelo Radiante Frío/Calor</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Climatización independiente de frío-calor por suelo radiante en todas las habitaciones y zonas comunes para cualquier estación.
+          </p>
+        </div>
+
+        <div class="p-6 bg-surface rounded-xl border border-outline-variant/25 space-y-2.5">
+          <span class="text-2xl">🍳</span>
+          <h3 class="font-serif text-xl text-primary">Cocina y Despensa Completa</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Placa de inducción, horno, lavavajillas, microondas, cafetera en grano, frigorífico y congelador verticales individuales y lavadora/secadora.
+          </p>
+        </div>
+
+        <div class="p-6 bg-surface rounded-xl border border-outline-variant/25 space-y-2.5">
+          <span class="text-2xl">🐾</span>
+          <h3 class="font-serif text-xl text-primary">100% Pet-Friendly</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Alojamiento completamente pet-friendly con patio cerrado y gran pradera natural justo al lado de la vivienda.
+          </p>
+        </div>
+
+        <div class="p-6 bg-surface rounded-xl border border-outline-variant/25 space-y-2.5">
+          <span class="text-2xl">🎲</span>
+          <h3 class="font-serif text-xl text-primary">Wi-Fi, TV en Suites y Juegos</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Conexión Wi-Fi de alta velocidad, TV de 49” en salón, TV de 42” en cada una de las 5 habitaciones y juegos de mesa para adultos y niños.
+          </p>
+        </div>
+
+        <div class="p-6 bg-surface rounded-xl border border-outline-variant/25 space-y-2.5">
+          <span class="text-2xl">🏊</span>
+          <h3 class="font-serif text-xl text-primary">Catering y Piscina a 200 m</h3>
+          <p class="text-xs text-on-surface-variant leading-relaxed">
+            Servicio de catering disponible bajo consulta y acceso gratuito a la piscina municipal situada a solo 200 metros de la casa.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 6: ENTORNO — LA IGLESUELA Y VALLE DEL TIÉTAR -->
+  <section class="w-full py-20 lg:py-28 bg-surface cv-auto">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 space-y-6">
+          <span class="label-caps text-secondary">
+            Entorno Natural y Patrimonio · La Iglesuela (Toledo)
+          </span>
+          <h2 class="font-serif text-3xl sm:text-[40px] text-primary leading-tight">
+            Entre la Sierra de Gredos, la Sierra de San Vicente y el río Tiétar
+          </h2>
+          <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">
+            Situada a 520 metros de altitud entre las sierras de San Vicente y Gredos, <strong>La Iglesuela</strong> es famosa por sus puentes romanos y vettones sobre el río Tiétar, la <strong>Garganta de Torinas</strong>, las etapas 16 y 17 de la <strong>Senda de Viriato (GR-63)</strong> y la legendaria encina <strong>El Gacho</strong> (registrada en el Libro Guinness como la más grande del mundo).
+          </p>
+          <ul class="space-y-2.5 text-xs sm:text-sm text-on-surface pt-1">
+            <li class="flex items-center gap-3">
+              <span class="w-2 h-2 rounded-full bg-primary"></span>
+              <span><strong>Gastronomía:</strong> Cuna del famoso <em>cochifrito</em>, queso de cabra Monte Enebro, patatas revolconas y tapeo tradicional.</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-2 h-2 rounded-full bg-primary"></span>
+              <span><strong>Red Natura 2000 y ZEPA:</strong> Avistamiento de águila imperial, cigüeña negra, recolección de níscalos y vuelo sin motor.</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-2 h-2 rounded-full bg-primary"></span>
+              <span><strong>Dirección exacta:</strong> {siteConfig.address.full}.</span>
+            </li>
+          </ul>
+          <div class="pt-2">
+            <a
+              href="/entorno"
+              class="inline-flex items-center gap-2 px-6 py-3 bg-primary-container text-on-primary rounded text-xs font-semibold uppercase tracking-wider hover:bg-primary transition-colors"
+            >
+              <span>Descubrir Qué Ver en La Iglesuela y el Tiétar</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+          <div class="col-span-2 h-64 rounded-xl overflow-hidden shadow-sm relative bg-surface-container">
+            <img
+              src="/uploads/Puente_romano_de_La_Iglesuela_001.jpg"
+              alt="Puente romano sobre el río Tiétar en La Iglesuela"
+              width="980"
+              height="653"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute bottom-3 left-3 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded text-xs font-medium text-primary">
+              Puente Romano de La Iglesuela
+            </div>
+          </div>
+          <div class="h-44 rounded-xl overflow-hidden shadow-sm relative bg-surface-container">
+            <img
+              src="/uploads/PANORAMICA.-LA-IGLESUELA-DEL-TIETAR.jpg"
+              alt="Panorámica de La Iglesuela del Tiétar"
+              width="480"
+              height="320"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="h-44 rounded-xl overflow-hidden shadow-sm relative bg-surface-container">
+            <img
+              src="/uploads/pueblo_vista_rojodeltietar.jpg"
+              alt="Vistas del pueblo de La Iglesuela y la sierra"
+              width="480"
+              height="480"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 7: ÚLTIMOS ARTÍCULOS DE LA GUÍA RURAL Y BLOG -->
+  <section class="w-full py-20 bg-surface-container-low cv-auto">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div>
+          <span class="label-caps text-secondary">Guía del Valle del Tiétar</span>
+          <h2 class="font-serif text-3xl sm:text-[40px] text-primary mt-2">
+            Rutas, gastronomía y planes desde nuestra casa
+          </h2>
+        </div>
+        <a href="/blog" class="label-caps text-primary hover:underline">
+          Ver todos los artículos →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+        {recentPosts.map((post) => (
+          <article class="bg-surface rounded-xl overflow-hidden border border-outline-variant/25 flex flex-col justify-between group">
+            <div>
+              <a href={`/blog/${post.id}`} class="block h-52 overflow-hidden bg-surface-container">
+                <img
+                  src={post.data.image}
+                  alt={post.data.imageAlt}
+                  width="570"
+                  height="320"
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </a>
+              <div class="p-6 space-y-3">
+                <span class="label-caps text-secondary">{post.data.readingTime}</span>
+                <h3 class="font-serif text-xl text-primary group-hover:text-primary-container transition-colors">
+                  <a href={`/blog/${post.id}`}>{post.data.title}</a>
+                </h3>
+                <p class="text-xs text-on-surface-variant line-clamp-3 leading-relaxed">
+                  {post.data.description}
+                </p>
+              </div>
+            </div>
+            <div class="px-6 pb-5">
+              <a href={`/blog/${post.id}`} class="label-caps text-primary hover:underline">
+                Leer artículo completo →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 8: PREGUNTAS FRECUENTES (FAQ CON SCHEMA.ORG) -->
+  <section class="w-full py-20 bg-surface cv-auto">
+    <div class="max-w-[1000px] mx-auto px-5 md:px-10">
+      <div class="text-center mb-12 space-y-2">
+        <span class="label-caps text-secondary">Dudas Resueltas</span>
+        <h2 class="font-serif text-3xl sm:text-[40px] text-primary">
+          Preguntas frecuentes sobre tu estancia en Casa Rojo del Tiétar
+        </h2>
+      </div>
+      <div class="space-y-4">
+        {faqsHome.map((faq, index) => (
+          <details
+            class="group bg-surface-container-low rounded-xl border border-outline-variant/30 p-6 open:bg-surface-container transition-colors"
+            open={index === 0}
+          >
+            <summary class="font-serif text-lg sm:text-xl text-primary cursor-pointer list-none flex items-center justify-between gap-4">
+              <span>{faq.question}</span>
+              <span class="text-secondary text-xl transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <p class="mt-3 pt-3 border-t border-outline-variant/25 text-sm text-on-surface-variant leading-relaxed">
+              {faq.answer}
+            </p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 9: CTA ATENCIÓN PERSONALIZADA Y CONTACTO DIRECTO -->
+  <section class="w-full py-16 lg:py-24 bg-surface cv-auto">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <div class="bg-surface-container rounded-2xl p-8 md:p-14 border border-outline-variant/35 shadow-ambient">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-7 space-y-4">
+            <span class="label-caps text-secondary">Atención Personalizada durante toda la estancia</span>
+            <h2 class="font-serif text-3xl sm:text-4xl text-primary">
+              ¿Preparando una escapada en familia o con amigos al Valle del Tiétar?
+            </h2>
+            <p class="text-base text-on-surface-variant font-light max-w-xl">
+              Para los huéspedes alojados en la casa estaremos a vuestra entera disposición durante toda la estancia. Consúltanos fechas, ofertas de última hora o promociones para larga duración.
+            </p>
+            <div class="pt-3 flex flex-wrap items-center gap-6">
+              <div>
+                <span class="label-caps text-secondary block">Teléfonos y WhatsApp Directo</span>
+                <div class="flex items-center gap-3 mt-1 text-lg font-semibold text-primary">
+                  <a href={`tel:${siteConfig.phone1Raw}`} class="hover:underline">{siteConfig.phone1}</a>
+                  <span class="text-outline">/</span>
+                  <a href={`tel:${siteConfig.phone2Raw}`} class="hover:underline">{siteConfig.phone2}</a>
+                </div>
+              </div>
+              <div>
+                <span class="label-caps text-secondary block">Correo Electrónico</span>
+                <a href={`mailto:${siteConfig.email}`} class="text-sm font-medium text-on-surface hover:text-primary underline">
+                  {siteConfig.email}
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-3.5">
+            <a
+              href="/reservas"
+              class="w-full py-4 px-6 bg-primary-container text-on-primary rounded text-sm font-semibold uppercase tracking-wider text-center hover:bg-primary transition-colors shadow-sm"
+            >
+              Reservar Casa Completa Ahora
+            </a>
+            <a
+              href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent('Hola, me gustaría consultar disponibilidad para Casa Rojo del Tiétar.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full py-4 px-6 bg-surface-container-lowest text-on-surface border border-outline-variant/50 rounded text-sm font-semibold uppercase tracking-wider text-center hover:bg-surface-container-high transition-colors"
+            >
+              Consultar por WhatsApp Directo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

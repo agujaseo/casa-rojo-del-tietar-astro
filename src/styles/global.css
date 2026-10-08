@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta Oficial Stitch — Casa Rojo del Tiétar (Terracotta, Cal, Pizarra y Oliva Seco) */
+  --color-primary: #703829;
+  --color-primary-container: #8c4f3e;
+  --color-on-primary: #ffffff;
+  --color-primary-fixed: #ffdbd1;
+  --color-primary-fixed-dim: #ffb5a0;
+  --color-on-primary-container: #ffd0c3;
+  --color-on-primary-fixed: #370d03;
+
+  --color-secondary: #59614e;
+  --color-secondary-container: #dde6cd;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #5f6753;
+
+  --color-tertiary: #5b4320;
+  --color-tertiary-container: #755b35;
+  --color-tertiary-fixed: #ffddb2;
+  --color-on-tertiary: #ffffff;
+
+  --color-surface: #fff8f5;
+  --color-surface-bright: #fff8f5;
+  --color-surface-dim: #e2d8d3;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fcf2ec;
+  --color-surface-container: #f6ece7;
+  --color-surface-container-high: #f0e6e1;
+  --color-surface-container-highest: #ebe0db;
+  --color-surface-variant: #ebe0db;
+
+  --color-on-surface: #1f1b18;
+  --color-on-surface-variant: #53433f;
+  --color-on-background: #1f1b18;
+  --color-background: #fff8f5;
+
+  --color-inverse-surface: #352f2c;
+  --color-inverse-on-surface: #f9efea;
+  --color-outline: #85736e;
+  --color-outline-variant: #d8c2bc;
+
+  /* Tipografías Stitch */
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, .font-serif-editorial {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Optimización WPO de renderizado fuera de pantalla (Modern Web Guidance) */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+/* Utilidades tipográficas exactas de Stitch */
+.label-caps {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.shadow-ambient {
+  box-shadow: 0 12px 36px -8px rgba(43, 38, 35, 0.06);
+}
+
+.shadow-ambient-lg {
+  box-shadow: 0 20px 48px -12px rgba(43, 38, 35, 0.12);
+}

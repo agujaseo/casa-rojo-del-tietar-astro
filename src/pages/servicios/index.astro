@@ -1,0 +1,199 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { servicesCategories, faqs } from '../../data/siteData';
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Servicios e Instalaciones', url: '/servicios' }
+];
+---
+
+<Layout
+  title="Servicios y Equipamiento | Casa Rojo del Tiétar (Desayuno Incluido)"
+  description="Descubre todos los servicios incluidos en Casa Rojo del Tiétar: desayuno mediterráneo incluido, salón con chimenea, cocina equipada, 5 suites con baño, jardín, barbacoa, servicio de catering y piscina municipal a 200 m."
+  breadcrumbs={breadcrumbs}
+  faqItems={faqs}
+>
+  <!-- Hero Section -->
+  <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-24 bg-[#1c1b1a] text-white overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-35">
+      <img
+        src="/uploads/salon4_rojodeltietar-570x320-1.jpg"
+        alt="Salón comedor y chimenea de Casa Rojo del Tiétar"
+        class="w-full h-full object-cover"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#1c1b1a] via-[#1c1b1a]/75 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-400">
+          <li><a href="/" class="hover:text-white transition-colors">Inicio</a></li>
+          <li>/</li>
+          <li class="text-[#ffb4a0] font-semibold">Servicios e Instalaciones</li>
+        </ol>
+      </nav>
+
+      <div class="max-w-3xl">
+        <span class="inline-block px-3.5 py-1.5 rounded-full bg-[#703829]/80 border border-[#ffb4a0]/30 text-[#ffb4a0] text-xs font-bold uppercase tracking-widest mb-4">
+          Comodidad absoluta para grupos
+        </span>
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          Servicios pensados para que solo vengas a <span class="italic font-normal text-[#ffb4a0]">disfrutar</span>
+        </h1>
+        <p class="text-stone-300 text-lg leading-relaxed">
+          En <strong>Casa Rojo del Tiétar</strong> hemos equipado cada rincón de nuestro antiguo pajar de piedra rehabilitado para que grupos de 10 a 13 personas dispongan de todas las comodidades de un alojamiento de alta gama en plena naturaleza.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Desayuno Mediterráneo Incluido Banner -->
+  <section class="py-16 bg-[#703829] text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7 space-y-5">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/15 text-[#ffdbd1] text-xs font-bold uppercase tracking-widest">
+            <span>☕</span> Incluido sin coste adicional en todas las reservas
+          </div>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold leading-tight">
+            Desayuno Mediterráneo Incluido para Todos los Huéspedes
+          </h2>
+          <p class="text-[#ffdbd1] text-lg leading-relaxed">
+            Queremos que tus mañanas en La Iglesuela del Tiétar comiencen sin prisas. Por eso, en la despensa y cocina de <strong>Casa Rojo del Tiétar</strong> encontrarás todo lo necesario para preparar un completo desayuno mediterráneo durante toda vuestra estancia:
+          </p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+            {[
+              'Café en grano/molido',
+              'Leche y Cacao',
+              'Infusiones variadas',
+              'Pan para tostar',
+              'Tomate natural',
+              'Aceite de Oliva Virgen',
+              'Bollería tradicional',
+              'Mantequilla y Mermeladas',
+              'Cereales crujientes',
+              'Galletas',
+              'Azúcar y Sacarina',
+              'Menaje completo'
+            ].map((item) => (
+              <div class="flex items-center gap-2 bg-white/10 backdrop-blur-xs px-3.5 py-2.5 rounded-xl text-sm font-medium">
+                <span class="text-[#ffb4a0] font-bold">✓</span>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/15 aspect-[4/3]">
+            <img
+              src="/uploads/desayuno_rojodeltietar-1200x500-1.jpg"
+              alt="Comedor y cocina equipada para desayuno en Casa Rojo del Tiétar"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detailed Service Categories -->
+  <section class="py-24 bg-[#fff8f5]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-[#703829] block mb-3">Equipamiento al detalle</span>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mb-4">
+          Todo lo que incluye Casa Rojo del Tiétar
+        </h2>
+        <p class="text-stone-600">
+          Más de 220 m² de vivienda en dos plantas más patio jardín privado, diseñados para la convivencia y el descanso.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {servicesCategories.map((cat) => (
+          <div class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-[#ffdbd1]/60 text-[#703829] flex items-center justify-center mb-6 font-serif font-bold text-xl">
+                ✦
+              </div>
+              <h3 class="font-serif text-2xl font-bold text-stone-900 mb-3">{cat.title}</h3>
+              <p class="text-stone-600 text-sm leading-relaxed mb-6">{cat.description}</p>
+              <ul class="space-y-2.5 border-t border-stone-100 pt-5">
+                {cat.items.map((item) => (
+                  <li class="flex items-start gap-2.5 text-sm text-stone-700">
+                    <svg class="w-4 h-4 text-[#703829] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Visual Showcase of Common Areas -->
+  <section class="py-20 bg-[#f7f3ee] content-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+      <!-- Cocina y Catering -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+          <img src="/uploads/cocina_rojodeltietar-570x320-1.jpg" alt="Cocina completa Casa Rojo del Tiétar" class="rounded-2xl shadow-md aspect-[4/3] object-cover w-full" loading="lazy" />
+          <img src="/uploads/cocina2_rojodeltietar-570x320-1.jpg" alt="Electrodomésticos de cocina" class="rounded-2xl shadow-md aspect-[4/3] object-cover w-full mt-6" loading="lazy" />
+          <img src="/uploads/comedor3_rojodeltietar-min-570x320-1.jpg" alt="Vajilla y menaje para grupos" class="rounded-2xl shadow-md aspect-[4/3] object-cover w-full" loading="lazy" />
+          <img src="/uploads/salonycocina2_rojodeltietar-min-570x320-1.jpg" alt="Detalles cocina rural" class="rounded-2xl shadow-md aspect-[4/3] object-cover w-full mt-6" loading="lazy" />
+        </div>
+        <div class="lg:col-span-6 space-y-5">
+          <span class="text-xs font-bold uppercase tracking-widest text-[#703829]">Gastronomía sin preocupaciones</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900">
+            Cocina Abierta de Alta Gama y Servicio de Catering Opcional
+          </h2>
+          <p class="text-stone-600 leading-relaxed">
+            La cocina de <strong>Casa Rojo del Tiétar</strong> está equipada con frigorífico combi, lavavajillas, lavadora, horno, microondas, placa de inducción, cafetera con grano recién molido, tostador, exprimidor, batidora y vajilla completa para 13 comensales.
+          </p>
+          <div class="p-6 rounded-2xl bg-white border border-stone-200/80 shadow-xs">
+            <h3 class="font-serif text-lg font-bold text-[#703829] mb-2">🍽️ ¿No os apetece cocinar? Servicio de Catering a Medida</h3>
+            <p class="text-sm text-stone-600 leading-relaxed">
+              Contamos con acuerdo directo con restaurantes y asadores tradicionales de La Iglesuela del Tiétar para ofreceros un <strong>servicio de catering de comida casera a precios económicos</strong> (cochifrito tradicional, asados, paellas y menús caseros). Consúltanos antes de tu llegada.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Piscina Municipal y Patio Exterior -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 order-2 lg:order-1 space-y-5">
+          <span class="text-xs font-bold uppercase tracking-widest text-[#59614e]">Vida al aire libre</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900">
+            Patio Jardín con Barbacoa, Leña Gratis y Piscina a 200 metros
+          </h2>
+          <p class="text-stone-600 leading-relaxed">
+            En el exterior de la vivienda disfrutaréis de un <strong>patio jardín privado de 90 m²</strong> con pérgola cubierta, barbacoa de obra con leña gratuita, ducha exterior fría/caliente y muebles de jardín. Además, encontraréis facilidad de aparcamiento en la misma puerta del alojamiento.
+          </p>
+          <p class="text-stone-600 leading-relaxed">
+            Durante los meses de verano, a tan solo <strong>200 metros a pie de la casa</strong> tenéis acceso gratuito a la <strong>Piscina Municipal de La Iglesuela del Tiétar</strong>, rodeada de césped natural y arboleda, complementando las pozas y charcas cristalinas de la Garganta de Torinas y el Río Tiétar.
+          </p>
+          <div class="flex flex-wrap gap-4 pt-2">
+            <a href="/tarifas" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[#703829] text-white font-semibold text-sm hover:bg-[#8c4f3e] transition-all shadow-md">
+              Ver Tarifas y Promociones
+            </a>
+            <a href="/reservas" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white border border-stone-300 text-stone-800 font-semibold text-sm hover:border-[#703829] transition-all">
+              Consultar Disponibilidad
+            </a>
+          </div>
+        </div>
+        <div class="lg:col-span-6 order-1 lg:order-2 grid grid-cols-2 gap-4">
+          <img src="/uploads/patio_exterior_rojodeltietar-min-570x320-1.jpg" alt="Patio exterior Casa Rojo del Tiétar" class="rounded-2xl shadow-md aspect-[4/3] object-cover w-full" loading="lazy" />
+          <img src="/uploads/pergola_rojodeltietar-570x320-1.jpg" alt="Pérgola y barbacoa exterior" class="rounded-2xl shadow-md aspect-[4/3] object-cover w-full mt-6" loading="lazy" />
+          <img src="/uploads/barbacoa_completa_rojodeltietar-570x320-1.jpg" alt="Barbacoa con leña gratuita" class="rounded-2xl shadow-md aspect-[4/3] object-cover w-full" loading="lazy" />
+          <img src="/uploads/montaje_ducha_flores_rojodeltietar.jpg" alt="Ducha exterior y jardín en La Iglesuela" class="rounded-2xl shadow-md aspect-[4/3] object-cover w-full mt-6" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

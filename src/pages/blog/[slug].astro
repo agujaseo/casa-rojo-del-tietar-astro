@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Guía Rural y Blog', url: '/blog' },
+  { name: post.data.titulo, url: `/blog/${post.id}` }
+];
+---
+
+<Layout
+  title={`${post.data.seoTitle || post.data.titulo} | Casa Rojo del Tiétar`}
+  description={post.data.seoDescription || post.data.extracto}
+  ogImage={post.data.imagenDestacada}
+  ogType="article"
+  breadcrumbs={breadcrumbs}
+  articleData={{
+    headline: post.data.titulo,
+    datePublished: post.data.fechaPublicacion,
+    author: post.data.autor,
+    image: post.data.imagenDestacada,
+    description: post.data.extracto
+  }}
+>
+  <article class="pt-32 pb-24 bg-[#fff8f5]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-stone-500">
+          <li><a href="/" class="hover:text-[#703829] transition-colors">Inicio</a></li>
+          <li>/</li>
+          <li><a href="/blog" class="hover:text-[#703829] transition-colors">Guía Rural y Blog</a></li>
+          <li>/</li>
+          <li class="text-[#703829] font-semibold truncate max-w-xs">{post.data.titulo}</li>
+        </ol>
+      </nav>
+
+      <header class="mb-10">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="px-3.5 py-1 rounded-full bg-[#ffdbd1] text-[#411308] text-xs font-bold uppercase tracking-wider">
+            {post.data.categoria}
+          </span>
+          <span class="text-xs text-stone-500">
+            Publicado el {new Date(post.data.fechaPublicacion).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </span>
+          <span class="text-xs text-stone-400">•</span>
+          <span class="text-xs text-stone-500">{post.data.tiempoLectura} de lectura</span>
+        </div>
+
+        <h1 class="font-serif text-3xl sm:text-5xl font-bold text-stone-900 leading-tight mb-6">
+          {post.data.titulo}
+        </h1>
+
+        <p class="text-lg text-stone-600 leading-relaxed">
+          {post.data.extracto}
+        </p>
+      </header>
+
+      <div class="rounded-3xl overflow-hidden shadow-xl mb-12 aspect-[16/9] bg-stone-200">
+        <img
+          src={post.data.imagenDestacada}
+          alt={post.data.titulo}
+          class="w-full h-full object-cover"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+
+      <div class="bg-white rounded-3xl p-8 sm:p-12 border border-stone-200/80 shadow-xs prose prose-stone prose-lg max-w-none prose-headings:font-serif prose-headings:text-stone-900 prose-a:text-[#703829] prose-strong:text-stone-900">
+        <Content />
+      </div>
+
+      <!-- Call to Action Footer -->
+      <div class="mt-14 bg-[#703829] text-white rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-widest text-[#ffb4a0] block mb-1">¿Planeando tu escapada en grupo?</span>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold mb-2">Alójate en Casa Rojo del Tiétar</h2>
+          <p class="text-[#ffdbd1] text-sm">5 suites con baño privado, desayuno incluido y capacidad para 10-13 personas desde 200 €/noche.</p>
+        </div>
+        <a href="/reservas" class="shrink-0 px-7 py-4 rounded-xl bg-white text-[#703829] font-bold text-sm hover:bg-[#ffdbd1] transition-colors shadow-md">
+          Consultar Disponibilidad
+        </a>
+      </div>
+    </div>
+  </article>
+</Layout>

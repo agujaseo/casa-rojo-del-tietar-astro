@@ -1,0 +1,280 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { siteBrand, ratesData, faqs } from '../../data/siteData';
+
+const breadcrumbs = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Contacto y Reservas', url: '/contacto' }
+];
+---
+
+<Layout
+  title="Contacto y Reservas Directas | Casa Rojo del Tiétar (La Iglesuela)"
+  description="Contacta directamente con Casa Rojo del Tiétar en La Iglesuela del Tiétar (Toledo). Teléfonos 605 935 487 / 607 438 345, email casarural@casaruralsierradeltietar.com y reserva sin comisiones."
+  breadcrumbs={breadcrumbs}
+  faqItems={faqs}
+>
+  <!-- Hero -->
+  <section class="relative pt-32 pb-16 lg:pt-40 lg:pb-20 bg-[#1c1b1a] text-white overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-35">
+      <img
+        src="/uploads/Casa-roja-con-un-bonito-atardecer.png"
+        alt="Contacto y reservas Casa Rojo del Tiétar"
+        class="w-full h-full object-cover"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-[#1c1b1a] via-[#1c1b1a]/75 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex items-center gap-2 text-xs uppercase tracking-widest text-stone-300">
+          <li><a href="/" class="hover:text-white transition-colors">Inicio</a></li>
+          <li>/</li>
+          <li class="text-[#ffb4a0] font-semibold">Contacto y Reservas</li>
+        </ol>
+      </nav>
+
+      <div class="max-w-3xl">
+        <span class="inline-block px-3.5 py-1.5 rounded-full bg-[#703829]/80 border border-[#ffb4a0]/30 text-[#ffb4a0] text-xs font-bold uppercase tracking-widest mb-4">
+          Atención directa con los propietarios · Mejor precio garantizado
+        </span>
+        <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          Reserva tu escapada en <span class="italic font-normal text-[#ffb4a0]">Casa Rojo del Tiétar</span>
+        </h1>
+        <p class="text-stone-300 text-lg leading-relaxed">
+          Trato cercano, sin intermediarios ni comisiones de portales. Consúltanos disponibilidad por teléfono, WhatsApp, correo electrónico o mediante el formulario directo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Contact & Booking Section -->
+  <section class="py-20 bg-[#fff8f5]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <!-- Direct Contact Cards -->
+        <div class="lg:col-span-5 space-y-6">
+          <div class="bg-white rounded-3xl p-8 border border-stone-200/80 shadow-sm space-y-6">
+            <h2 class="font-serif text-2xl font-bold text-stone-900">Datos de Contacto Oficiales</h2>
+
+            <div class="space-y-4">
+              <a href="tel:+34605935487" class="flex items-start gap-4 p-4 rounded-2xl bg-[#fff8f5] hover:bg-[#ffdbd1]/40 transition-colors border border-stone-200/60">
+                <div class="w-11 h-11 rounded-xl bg-[#703829] text-white flex items-center justify-center shrink-0 font-bold">
+                  📞
+                </div>
+                <div>
+                  <span class="block text-xs font-bold uppercase tracking-wider text-stone-500">Teléfono Principal y WhatsApp</span>
+                  <span class="font-serif text-xl font-bold text-stone-900">605 935 487</span>
+                  <span class="block text-xs text-[#703829] font-medium mt-0.5">Respuesta inmediata</span>
+                </div>
+              </a>
+
+              <a href="tel:+34607438345" class="flex items-start gap-4 p-4 rounded-2xl bg-[#fff8f5] hover:bg-[#ffdbd1]/40 transition-colors border border-stone-200/60">
+                <div class="w-11 h-11 rounded-xl bg-[#59614e] text-white flex items-center justify-center shrink-0 font-bold">
+                  📱
+                </div>
+                <div>
+                  <span class="block text-xs font-bold uppercase tracking-wider text-stone-500">Teléfono Secundario</span>
+                  <span class="font-serif text-xl font-bold text-stone-900">607 438 345</span>
+                  <span class="block text-xs text-stone-500 mt-0.5">Atención personalizada</span>
+                </div>
+              </a>
+
+              <a href="mailto:casarural@casaruralsierradeltietar.com" class="flex items-start gap-4 p-4 rounded-2xl bg-[#fff8f5] hover:bg-[#ffdbd1]/40 transition-colors border border-stone-200/60">
+                <div class="w-11 h-11 rounded-xl bg-stone-800 text-white flex items-center justify-center shrink-0 font-bold">
+                  ✉️
+                </div>
+                <div class="overflow-hidden">
+                  <span class="block text-xs font-bold uppercase tracking-wider text-stone-500">Correo Electrónico</span>
+                  <span class="font-semibold text-sm sm:text-base text-stone-900 break-all">casarural@casaruralsierradeltietar.com</span>
+                </div>
+              </a>
+
+              <div class="flex items-start gap-4 p-4 rounded-2xl bg-[#fff8f5] border border-stone-200/60">
+                <div class="w-11 h-11 rounded-xl bg-[#8c4f3e] text-white flex items-center justify-center shrink-0 font-bold">
+                  📍
+                </div>
+                <div>
+                  <span class="block text-xs font-bold uppercase tracking-wider text-stone-500">Dirección Física</span>
+                  <span class="font-semibold text-stone-900">{siteBrand.address.street}</span>
+                  <span class="block text-sm text-stone-600">{siteBrand.address.postalCode} {siteBrand.address.locality} ({siteBrand.address.region})</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-stone-100">
+              <a
+                href="https://www.facebook.com/Rojodeltietar"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-sm font-semibold text-[#703829] hover:underline"
+              >
+                Síguenos en Facebook (/Rojodeltietar) →
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Summary of Rates -->
+          <div class="bg-[#703829] text-white rounded-3xl p-8 shadow-lg space-y-4">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#ffb4a0]">Resumen de Condiciones</span>
+            <h3 class="font-serif text-2xl font-bold">Reserva 100% Segura</h3>
+            <ul class="space-y-2.5 text-sm text-[#ffdbd1]">
+              <li>• <strong>Domingo a Jueves:</strong> 200 €/noche (casa íntegra)</li>
+              <li>• <strong>Viernes, Sábados y Agosto:</strong> 375 €/noche</li>
+              <li>• <strong>Oferta Semana Completa:</strong> 1.400 €/semana</li>
+              <li>• <strong>Señal de reserva:</strong> 25% (100% reembolsable hasta 7 días antes)</li>
+              <li>• <strong>Entrada:</strong> 17:00h | <strong>Salida:</strong> 14:00h</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Interactive Reservation / Contact Form -->
+        <div class="lg:col-span-7">
+          <div class="bg-white rounded-3xl p-8 sm:p-10 border border-stone-200/80 shadow-md">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#703829] block mb-2">Solicitud sin compromiso</span>
+            <h2 class="font-serif text-3xl font-bold text-stone-900 mb-3">
+              Consultar Disponibilidad y Presupuesto
+            </h2>
+            <p class="text-stone-600 text-sm mb-8">
+              Completa tus fechas y el tamaño de tu grupo. Podrás enviarnos la solicitud directamente por <strong>WhatsApp instantáneo</strong> o por <strong>correo electrónico</strong>.
+            </p>
+
+            <form id="booking-contact-form" class="space-y-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label for="f-nombre" class="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Nombre y Apellidos *</label>
+                  <input id="f-nombre" name="nombre" type="text" required placeholder="Ej. María García" class="w-full px-4 py-3.5 rounded-xl bg-[#fff8f5] border border-stone-300 text-stone-900 focus:outline-none focus:border-[#703829]" />
+                </div>
+                <div>
+                  <label for="f-telefono" class="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Teléfono de contacto *</label>
+                  <input id="f-telefono" name="telefono" type="tel" required placeholder="Ej. 600 123 456" class="w-full px-4 py-3.5 rounded-xl bg-[#fff8f5] border border-stone-300 text-stone-900 focus:outline-none focus:border-[#703829]" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div>
+                  <label for="f-llegada" class="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Fecha de Llegada *</label>
+                  <input id="f-llegada" name="llegada" type="date" required class="w-full px-4 py-3.5 rounded-xl bg-[#fff8f5] border border-stone-300 text-stone-900 focus:outline-none focus:border-[#703829]" />
+                </div>
+                <div>
+                  <label for="f-salida" class="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Fecha de Salida *</label>
+                  <input id="f-salida" name="salida" type="date" required class="w-full px-4 py-3.5 rounded-xl bg-[#fff8f5] border border-stone-300 text-stone-900 focus:outline-none focus:border-[#703829]" />
+                </div>
+                <div>
+                  <label for="f-huespedes" class="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Nº de Personas</label>
+                  <select id="f-huespedes" name="huespedes" class="w-full px-4 py-3.5 rounded-xl bg-[#fff8f5] border border-stone-300 text-stone-900 focus:outline-none focus:border-[#703829]">
+                    <option value="Hasta 10 personas (5 suites)">Hasta 10 personas (5 suites)</option>
+                    <option value="11 personas (+1 supletoria)">11 personas (+1 supletoria)</option>
+                    <option value="12 personas (+2 supletorias)">12 personas (+2 supletorias)</option>
+                    <option value="13 personas (+3 supletorias)">13 personas (+3 supletorias)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label for="f-email" class="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Correo Electrónico</label>
+                <input id="f-email" name="email" type="email" placeholder="tu@email.com" class="w-full px-4 py-3.5 rounded-xl bg-[#fff8f5] border border-stone-300 text-stone-900 focus:outline-none focus:border-[#703829]" />
+              </div>
+
+              <div>
+                <label for="f-mensaje" class="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">Comentarios, mascotas o catering</label>
+                <textarea id="f-mensaje" name="mensaje" rows="4" placeholder="Indícanos si viajáis con niños, mascota o si os interesa nuestro servicio de catering casero..." class="w-full px-4 py-3.5 rounded-xl bg-[#fff8f5] border border-stone-300 text-stone-900 focus:outline-none focus:border-[#703829]"></textarea>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                <button
+                  type="submit"
+                  data-mode="whatsapp"
+                  class="flex-1 py-4 px-6 rounded-xl bg-[#25D366] text-stone-950 font-bold text-sm hover:bg-[#20bd5a] transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>💬</span> Enviar Solicitud por WhatsApp (605 935 487)
+                </button>
+                <button
+                  type="button"
+                  id="btn-send-email"
+                  class="py-4 px-6 rounded-xl bg-[#703829] text-white font-semibold text-sm hover:bg-[#8c4f3e] transition-all shadow-md cursor-pointer"
+                >
+                  ✉️ Enviar por Email
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="py-16 bg-[#f7f3ee]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm">
+        <div class="p-8 border-b border-stone-100 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="font-serif text-2xl font-bold text-stone-900">Cómo llegar a Casa Rojo del Tiétar</h2>
+            <p class="text-sm text-stone-600">Paraje el Carrascal, s/n · 45633 La Iglesuela del Tiétar (Toledo) · A 1h 15 min de Madrid por la A-5 / M-501.</p>
+          </div>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Casa+Rural+Sierra+del+Tietar+La+Iglesuela+del+Tietar"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-5 py-2.5 rounded-xl bg-stone-900 text-white text-xs font-bold uppercase tracking-wider hover:bg-[#703829] transition-colors"
+          >
+            Abrir en Google Maps ↗
+          </a>
+        </div>
+        <div class="aspect-[21/9] min-h-[320px] w-full bg-stone-200">
+          <iframe
+            title="Mapa de ubicación de Casa Rojo del Tiétar en La Iglesuela del Tiétar"
+            src="https://www.google.com/maps?q=40.2333,-4.7500&hl=es&z=14&output=embed"
+            class="w-full h-full border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Pre-fill query params from BookingWidget
+    const params = new URLSearchParams(window.location.search);
+    const inLlegada = document.getElementById('f-llegada') as HTMLInputElement | null;
+    const inSalida = document.getElementById('f-salida') as HTMLInputElement | null;
+    const inHuespedes = document.getElementById('f-huespedes') as HTMLSelectElement | null;
+    const inMensaje = document.getElementById('f-mensaje') as HTMLTextAreaElement | null;
+
+    if (params.get('llegada') && inLlegada) inLlegada.value = params.get('llegada')!;
+    if (params.get('salida') && inSalida) inSalida.value = params.get('salida')!;
+    if (params.get('tarifa') && inMensaje) {
+      inMensaje.value = `Interesado en la tarifa: ${params.get('tarifa')}. `;
+    }
+
+    const form = document.getElementById('booking-contact-form') as HTMLFormElement | null;
+    const btnEmail = document.getElementById('btn-send-email');
+
+    function buildMessage() {
+      const nombre = (document.getElementById('f-nombre') as HTMLInputElement)?.value || '';
+      const telefono = (document.getElementById('f-telefono') as HTMLInputElement)?.value || '';
+      const llegada = inLlegada?.value || '';
+      const salida = inSalida?.value || '';
+      const huespedes = inHuespedes?.value || '';
+      const mensaje = inMensaje?.value || '';
+
+      return `Hola Casa Rojo del Tiétar, soy ${nombre} (${telefono}). Me gustaría consultar disponibilidad del ${llegada} al ${salida} para ${huespedes}. ${mensaje}`;
+    }
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = encodeURIComponent(buildMessage());
+      window.open(`https://wa.me/34605935487?text=${text}`, '_blank');
+    });
+
+    btnEmail?.addEventListener('click', () => {
+      const subject = encodeURIComponent('Solicitud de Reserva - Casa Rojo del Tiétar');
+      const body = encodeURIComponent(buildMessage());
+      window.location.href = `mailto:casarural@casaruralsierradeltietar.com?subject=${subject}&body=${body}`;
+    });
+  </script>
+</Layout>

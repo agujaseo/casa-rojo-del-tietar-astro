@@ -1,0 +1,18 @@
+{
+  "nombreMarca": "Casa Rojo del Tiétar",
+  "subtituloMarca": "Casa Rural Boutique en el Valle del Tiétar",
+  "telefonoPrincipal": "605 935 487",
+  "telefonoSecundario": "607 438 345",
+  "email": "casarural@casaruralsierradeltietar.com",
+  "direccion": "Paraje el Carrascal, s/n. 45633 La Iglesuela (Toledo)",
+  "facebookUrl": "https://www.facebook.com/Rojodeltietar",
+  "precioDomingoJueves": 200,
+  "precioViernesSabado": 375,
+  "precioCamaSupletoria": 10,
+  "precioSemanaAniversario": 1400,
+  "estanciaMinimaNoches": 2,
+  "fianzaEuros": 100,
+  "porcentajeSenal": 25,
+  "horaCheckIn": "17:00h",
+  "horaCheckOut": "14:00h"
+}

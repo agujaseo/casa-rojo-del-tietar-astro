@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteBrand } from '../data/siteData';
+---
+
+<Layout
+  title="Aviso Legal | Casa Rojo del Tiétar"
+  description="Información legal y condiciones generales de uso del sitio web oficial de Casa Rojo del Tiétar en La Iglesuela del Tiétar (Toledo)."
+  noindex={true}
+>
+  <section class="pt-36 pb-24 bg-[#fff8f5]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl p-8 sm:p-12 border border-stone-200/80 shadow-xs prose prose-stone max-w-none">
+        <h1 class="font-serif text-3xl sm:text-4xl font-bold text-stone-900 mb-6">Aviso Legal</h1>
+        <p>En cumplimiento con el deber de información recogido en el artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSI-CE), se detallan a continuación los datos identificativos del titular del alojamiento rural:</p>
+        <ul>
+          <li><strong>Denominación comercial:</strong> {siteBrand.name} ({siteBrand.officialName})</li>
+          <li><strong>Dirección del establecimiento:</strong> {siteBrand.address.street}, {siteBrand.address.postalCode} {siteBrand.address.locality} ({siteBrand.address.region}), España</li>
+          <li><strong>Teléfonos de contacto:</strong> {siteBrand.phones[0]} / {siteBrand.phones[1]}</li>
+          <li><strong>Correo electrónico:</strong> {siteBrand.email}</li>
+        </ul>
+        <h2 class="font-serif text-2xl font-bold mt-8">Condiciones de Uso</h2>
+        <p>El acceso y uso de este portal atribuye la condición de usuario e implica la aceptación de las presentes condiciones legales. El usuario se compromete a hacer un uso adecuado de los contenidos y servicios ofrecidos a través de este sitio web.</p>
+        <h2 class="font-serif text-2xl font-bold mt-8">Propiedad Intelectual e Industrial</h2>
+        <p>Todas las fotografías de las instalaciones, textos descriptivos, logotipos y diseño gráfico de <strong>Casa Rojo del Tiétar</strong> están protegidos por los derechos de propiedad intelectual e industrial de sus legítimos titulares.</p>
+      </div>
+    </div>
+  </section>
+</Layout>

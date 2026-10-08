@@ -1,0 +1,296 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { siteConfig, fullGallery } from '../../data/siteData';
+import { getCollection } from 'astro:content';
+
+const allEstancias = await getCollection('estancias');
+const sortedEstancias = allEstancias.sort((a, b) => (a.data.orden ?? 99) - (b.data.orden ?? 99));
+
+const categories = ['Todas', ...new Set(fullGallery.map((item) => item.category))];
+---
+
+<Layout
+  title="Galería y Estancias | Las 5 Suites con Baño, Salón de 68 m² y Patio — Casa Rojo del Tiétar"
+  description="Descubre las estancias de Casa Rojo del Tiétar en La Iglesuela: Suites Ejido y Gredos con bañera exenta, Suites Torinas y Piélago con balcón, Suite Pajar adaptada PMR, salón de 68,60 m² con chimenea y patio con barbacoa."
+  breadcrumbs={[
+    { name: 'Inicio', url: '/' },
+    { name: 'Galería y Estancias', url: '/estancias' },
+  ]}
+>
+  <!-- Hero Cabecera -->
+  <section class="bg-surface-container-low py-14 lg:py-20 border-b border-outline-variant/25">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <span class="label-caps text-secondary block mb-3">
+        Casa Rural Rojo del Tiétar · 240 m² Interiores + Patio Exterior
+      </span>
+      <h1 class="font-serif text-4xl sm:text-5xl text-primary max-w-3xl leading-tight">
+        Nuestras Estancias, las 5 Suites con Baño y Galería Fotográfica
+      </h1>
+      <p class="mt-4 text-base sm:text-lg text-on-surface-variant max-w-2xl font-light">
+        Cinco dormitorios tipo suite con cuarto de baño propio (dos con bañera exenta en la habitación y uno en planta baja adaptado a movilidad reducida), gran salón-comedor de 68,60 m² con chimenea y patio privado con pérgola y barbacoa.
+      </p>
+    </div>
+  </section>
+
+  <!-- Listado Detallado de Estancias (Desde Keystatic CMS) -->
+  <section class="py-16 lg:py-24 bg-surface">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10 space-y-16">
+      {sortedEstancias.map((estancia, idx) => (
+        <article
+          id={estancia.id}
+          class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pb-16 border-b border-outline-variant/30 last:border-b-0 last:pb-0"
+        >
+          <!-- Fotos de la estancia -->
+          <div class:list={['lg:col-span-6 space-y-3', idx % 2 === 1 ? 'lg:order-2' : '']}>
+            <div class="rounded-xl overflow-hidden shadow-sm h-72 sm:h-88 bg-surface-container">
+              <img
+                src={estancia.data.imagenPrincipal}
+                alt={estancia.data.title}
+                width="800"
+                height="500"
+                loading={idx < 2 ? 'eager' : 'lazy'}
+                decoding="async"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            {estancia.data.galeria && estancia.data.galeria.length > 1 && (
+              <div class="grid grid-cols-4 gap-3">
+                {estancia.data.galeria.slice(0, 4).map((imgUrl) => (
+                  <button
+                    type="button"
+                    data-lightbox-src={imgUrl}
+                    data-lightbox-caption={estancia.data.title}
+                    class="h-20 rounded-lg overflow-hidden border border-outline-variant/40 hover:border-primary transition-all cursor-pointer bg-surface-container"
+                  >
+                    <img
+                      src={imgUrl}
+                      alt={`Detalle de ${estancia.data.title}`}
+                      width="200"
+                      height="130"
+                      loading="lazy"
+                      decoding="async"
+                      class="w-full h-full object-cover hover:scale-105 transition-transform"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <!-- Información técnica y calidades -->
+          <div class:list={['lg:col-span-6 space-y-5', idx % 2 === 1 ? 'lg:order-1' : '']}>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-3 py-1 bg-surface-container text-primary label-caps rounded">
+                {estancia.data.planta}
+              </span>
+              <span class="px-3 py-1 bg-secondary-container text-on-secondary-container label-caps rounded">
+                {estancia.data.superficie}
+              </span>
+              <span class="px-3 py-1 bg-surface-container-low text-secondary label-caps rounded">
+                {estancia.data.capacidad}
+              </span>
+            </div>
+
+            <h2 class="font-serif text-3xl sm:text-4xl text-primary">
+              {estancia.data.title}
+            </h2>
+
+            <p class="text-sm sm:text-base text-on-surface-variant leading-relaxed">
+              {estancia.data.description}
+            </p>
+
+            <div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant/30 text-xs sm:text-sm">
+              <p><strong class="text-primary">Distribución y Camas:</strong> {estancia.data.camas}</p>
+              <p class="mt-1"><strong class="text-primary">Rasgo Singular:</strong> {estancia.data.destacado}</p>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="label-caps text-secondary">Calidades e Incluye</h3>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-on-surface">
+                {estancia.data.equipamiento.map((item) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-primary font-bold">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="pt-2">
+              <a
+                href="/reservas"
+                class="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-container text-on-primary rounded text-xs font-semibold uppercase tracking-wider hover:bg-primary transition-colors"
+              >
+                <span>Reservar Casa Completa</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Otras Zonas de la Vivienda -->
+  <section class="py-14 bg-surface-container-low border-t border-outline-variant/25 cv-auto">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <div class="bg-surface rounded-xl p-8 border border-outline-variant/30 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <span class="label-caps text-secondary">Planta Baja</span>
+          <h3 class="font-serif text-xl text-primary mt-1">Aseo de Cortesía Adicional</h3>
+          <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+            Además de los 5 cuartos de baño privados integrados en cada suite, la planta baja dispone de un aseo independiente junto al salón-comedor.
+          </p>
+        </div>
+        <div>
+          <span class="label-caps text-secondary">Cicloturismo y Deporte</span>
+          <h3 class="font-serif text-xl text-primary mt-1">Dos Almacenes Guardabicis</h3>
+          <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+            La vivienda cuenta con dos almacenes específicos para guardar con total seguridad las bicicletas de ruta o montaña y otro equipamiento de los huéspedes.
+          </p>
+        </div>
+        <div>
+          <span class="label-caps text-secondary">Accesibilidad e Independencia</span>
+          <h3 class="font-serif text-xl text-primary mt-1">Acceso Directo desde la Calle al Patio</h3>
+          <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">
+            El patio exterior cuenta con entrada independiente desde la calle sin necesidad de atravesar la vivienda, además de comunicación directa con el salón y la Suite Pajar.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galería de Fotos Inmersiva con Filtros -->
+  <section class="py-16 lg:py-24 bg-surface cv-auto" id="galeria">
+    <div class="max-w-[1360px] mx-auto px-5 md:px-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div>
+          <span class="label-caps text-secondary">Recorrido Visual Real</span>
+          <h2 class="font-serif text-3xl sm:text-4xl text-primary mt-1">
+            Galería de Fotos Inmersiva
+          </h2>
+        </div>
+        <div class="flex flex-wrap gap-2" id="gallery-filters">
+          {categories.map((cat, idx) => (
+            <button
+              type="button"
+              data-filter={cat}
+              class:list={[
+                'px-3.5 py-1.5 rounded text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer',
+                idx === 0
+                  ? 'bg-primary text-on-primary'
+                  : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high',
+              ]}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="gallery-grid">
+        {fullGallery.map((item) => (
+          <figure
+            data-category={item.category}
+            class="gallery-item group rounded-xl overflow-hidden bg-surface-container border border-outline-variant/25 cursor-pointer relative h-64"
+            data-lightbox-src={item.src}
+            data-lightbox-caption={`${item.title} — ${item.category}`}
+          >
+            <img
+              src={item.src}
+              alt={item.alt}
+              width="570"
+              height="320"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-inverse-surface/80 via-inverse-surface/35 to-transparent p-4 text-on-primary">
+              <span class="text-[10px] uppercase tracking-widest text-primary-fixed block">{item.category}</span>
+              <span class="font-serif text-base">{item.title}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Native HTML5 Dialog Lightbox -->
+  <dialog
+    id="photo-lightbox"
+    class="backdrop:bg-black/80 bg-transparent p-4 max-w-4xl w-full m-auto rounded-xl focus:outline-none"
+  >
+    <div class="bg-surface rounded-xl overflow-hidden shadow-2xl border border-outline-variant/40">
+      <div class="relative bg-black flex items-center justify-center max-h-[75vh]">
+        <img id="lightbox-img" src="" alt="" class="max-h-[75vh] w-auto object-contain" />
+        <button
+          type="button"
+          id="lightbox-close"
+          class="absolute top-3 right-3 px-3 py-1.5 bg-surface/90 text-primary rounded text-xs font-bold uppercase tracking-wider cursor-pointer"
+        >
+          Cerrar ✕
+        </button>
+      </div>
+      <div class="p-4 flex items-center justify-between bg-surface">
+        <p id="lightbox-caption" class="font-serif text-lg text-primary"></p>
+        <a href="/reservas" class="text-xs font-semibold text-primary uppercase tracking-wider hover:underline">
+          Reservar Estancia →
+        </a>
+      </div>
+    </div>
+  </dialog>
+
+  <script is:inline>
+    (() => {
+      // Filtros de galería
+      const filterBtns = document.querySelectorAll('#gallery-filters button');
+      const items = document.querySelectorAll('#gallery-grid .gallery-item');
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const cat = btn.getAttribute('data-filter');
+          filterBtns.forEach((b) => {
+            b.classList.remove('bg-primary', 'text-on-primary');
+            b.classList.add('bg-surface-container', 'text-on-surface-variant');
+          });
+          btn.classList.add('bg-primary', 'text-on-primary');
+          btn.classList.remove('bg-surface-container', 'text-on-surface-variant');
+
+          items.forEach((el) => {
+            if (cat === 'Todas' || el.getAttribute('data-category') === cat) {
+              el.classList.remove('hidden');
+            } else {
+              el.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // Lightbox nativo <dialog>
+      const dialog = document.getElementById('photo-lightbox');
+      const lbImg = document.getElementById('lightbox-img');
+      const lbCap = document.getElementById('lightbox-caption');
+      const lbClose = document.getElementById('lightbox-close');
+
+      document.querySelectorAll('[data-lightbox-src]').forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          const src = trigger.getAttribute('data-lightbox-src');
+          const cap = trigger.getAttribute('data-lightbox-caption') || '';
+          if (dialog && lbImg && src) {
+            lbImg.src = src;
+            lbImg.alt = cap;
+            if (lbCap) lbCap.textContent = cap;
+            dialog.showModal();
+          }
+        });
+      });
+
+      if (lbClose && dialog) {
+        lbClose.addEventListener('click', () => dialog.close());
+        dialog.addEventListener('click', (e) => {
+          if (e.target === dialog) dialog.close();
+        });
+      }
+    })();
+  </script>
+</Layout>
