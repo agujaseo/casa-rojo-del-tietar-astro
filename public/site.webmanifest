@@ -1,0 +1,22 @@
+{
+  "name": "Casa Rojo del Tiétar — Casa Rural en La Iglesuela del Tiétar",
+  "short_name": "Casa Rojo del Tiétar",
+  "description": "Casa rural de alquiler íntegro para 10-13 personas con 5 suites con baño privado y desayuno mediterráneo incluido en La Iglesuela del Tiétar (Toledo).",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff8f5",
+  "theme_color": "#703829",
+  "lang": "es-ES",
+  "icons": [
+    {
+      "src": "/uploads/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/uploads/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

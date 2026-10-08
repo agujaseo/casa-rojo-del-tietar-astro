@@ -8,6 +8,9 @@ import node from '@astrojs/node';
 export default defineConfig({
   site: 'https://casaruralsierradeltietar.com',
   compressHTML: true,
+  build: {
+    inlineStylesheets: 'always',
+  },
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport',
@@ -25,7 +28,11 @@ export default defineConfig({
     react(),
     keystatic(),
     sitemap({
-      filter: (page) => !page.includes('/keystatic'),
+      filter: (page) =>
+        !page.includes('/keystatic') &&
+        !page.includes('/aviso-legal') &&
+        !page.includes('/privacidad') &&
+        !page.includes('/cookies'),
       changefreq: 'weekly',
       priority: 0.8,
       lastmod: new Date(),

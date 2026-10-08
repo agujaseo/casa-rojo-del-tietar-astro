@@ -9,11 +9,20 @@ interface Props {
   description?: string;
   canonical?: string;
   ogImage?: string;
+  preloadImage?: string;
   ogType?: 'website' | 'article';
   noindex?: boolean;
   breadcrumbs?: Array<{ name: string; url: string }>;
   extraSchema?: Record<string, any> | Array<Record<string, any>>;
   includeFaqSchema?: boolean;
+  faqItems?: Array<{ question: string; answer: string }>;
+  articleData?: {
+    headline: string;
+    datePublished: string;
+    author?: string;
+    image?: string;
+    description?: string;
+  };
 }
 
 const {
@@ -21,11 +30,14 @@ const {
   description = 'Casa Rural Rojo del Tiétar en La Iglesuela (Valle del Tiétar, a 115 km de Madrid). Antiguo pajar de piedra de 240 m² con 5 dormitorios tipo suite con baño privado, bañera exenta, chimenea, barbacoa con leña gratis y desayuno casero incluido.',
   canonical = Astro.url.href,
   ogImage = siteConfig.heroImage,
+  preloadImage,
   ogType = 'website',
   noindex = false,
   breadcrumbs = [{ name: 'Inicio', url: '/' }],
   extraSchema,
   includeFaqSchema = false,
+  faqItems,
+  articleData,
 } = Astro.props;
 
 const canonicalUrl = canonical.startsWith('http')
@@ -34,16 +46,18 @@ const canonicalUrl = canonical.startsWith('http')
 const ogImageUrl = ogImage.startsWith('http')
   ? ogImage
   : new URL(ogImage, siteConfig.url).toString();
+const heroPreload = preloadImage || ogImage;
 
-// Schema.org @graph completo (LodgingBusiness + VacationRental + BedAndBreakfast + Product/Offer + BreadcrumbList + FAQPage)
+// Schema.org @graph completo (LodgingBusiness + VacationRental + BedAndBreakfast + Suites containsPlace + Offer + BreadcrumbList + FAQPage + BlogPosting)
 const graphEntities: Array<Record<string, any>> = [
   {
     '@type': ['LodgingBusiness', 'BedAndBreakfast', 'VacationRental'],
     '@id': `${siteConfig.url}/#lodging`,
+    identifier: 'casa-rojo-del-tietar',
     name: siteConfig.name,
-    alternateName: 'Casa Rural Rojo del Tiétar',
+    alternateName: ['Casa Rural Rojo del Tiétar', 'Casa Rural Sierra del Tiétar'],
     description:
-      'Casa rural de alquiler íntegro en La Iglesuela del Tiétar (Toledo), a 115 km de Madrid. 240 m² en dos plantas + patio privado con pérgola y barbacoa. 5 habitaciones tipo suite con baño propio (2 con bañera exenta y 1 adaptada PMR), desayuno mediterráneo incluido cada día, chimenea con leña gratuita y pet-friendly.',
+      'Casa rural de alquiler íntegro en La Iglesuela del Tiétar (Toledo), a 115 km de Madrid. 240 m² en dos plantas + patio privado de 90 m² con pérgola y barbacoa. 5 habitaciones tipo suite con baño propio (2 con bañera exenta y 1 adaptada PMR), desayuno mediterráneo incluido cada día, chimenea con leña gratuita y pet-friendly.',
     url: siteConfig.url,
     logo: new URL(siteConfig.logo, siteConfig.url).toString(),
     image: [
@@ -58,11 +72,13 @@ const graphEntities: Array<Record<string, any>> = [
     email: siteConfig.email,
     priceRange: '200€ - 375€ / noche (Casa completa 10-13 plazas con desayuno)',
     currenciesAccepted: 'EUR',
-    paymentAccepted: 'Transferencia bancaria, Tarjeta de crédito/débito, Efectivo',
+    paymentAccepted: 'Transferencia bancaria, Bizum, Efectivo',
     checkinTime: '17:00',
     checkoutTime: '14:00',
     petsAllowed: true,
     numberOfRooms: 5,
+    numberOfBedrooms: 5,
+    numberOfBathroomsTotal: 6,
     floorSize: {
       '@type': 'QuantitativeValue',
       value: 240,
@@ -88,13 +104,46 @@ const graphEntities: Array<Record<string, any>> = [
     },
     hasMap: 'https://www.google.com/maps/search/?api=1&query=Casa+Rural+Rojo+del+Tietar+La+Iglesuela+Toledo',
     sameAs: [siteConfig.social.facebook],
+    knowsLanguage: ['es', 'en'],
+    containsPlace: [
+      {
+        '@type': 'Suite',
+        name: 'Suite Ejido',
+        description: 'Suite en planta alta con cama de matrimonio de 150 cm, bañera exenta integrada en el dormitorio y baño privado completo de 3,50 m².',
+        occupancy: { '@type': 'QuantitativeValue', value: 2 },
+      },
+      {
+        '@type': 'Suite',
+        name: 'Suite Gredos',
+        description: 'Suite en planta alta con cama de matrimonio de 150 cm, bañera exenta en la habitación y cuarto de baño privado completo.',
+        occupancy: { '@type': 'QuantitativeValue', value: 2 },
+      },
+      {
+        '@type': 'Suite',
+        name: 'Suite Torinas',
+        description: 'Amplia suite de 20 m² con cama Queen Size de 160 cm, balcón privado al patio y cuarto de baño completo de 3,30 m².',
+        occupancy: { '@type': 'QuantitativeValue', maxValue: 3 },
+      },
+      {
+        '@type': 'Suite',
+        name: 'Suite Piélago',
+        description: 'Amplia suite de 20 m² con cama Queen Size de 160 cm, balcón al patio amurallado y cuarto de baño privado de 3,30 m².',
+        occupancy: { '@type': 'QuantitativeValue', maxValue: 3 },
+      },
+      {
+        '@type': 'Suite',
+        name: 'Suite Pajar (Adaptada PMR)',
+        description: 'Suite en planta baja de 14 m² adaptada a movilidad reducida con 2 camas de 90 cm, baño accesible de 4,75 m² y salida directa al patio.',
+        occupancy: { '@type': 'QuantitativeValue', maxValue: 3 },
+      },
+    ],
     amenityFeature: [
       { '@type': 'LocationFeatureSpecification', name: 'Desayuno mediterráneo casero diario incluido', value: true },
       { '@type': 'LocationFeatureSpecification', name: '5 Suites con cuarto de baño privado completo', value: true },
       { '@type': 'LocationFeatureSpecification', name: '2 Suites con bañera exenta en la habitación', value: true },
       { '@type': 'LocationFeatureSpecification', name: '1 Suite en planta baja adaptada a movilidad reducida (PMR)', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'Chimenea de leña y barbacoa con leña gratuita', value: true },
-      { '@type': 'LocationFeatureSpecification', name: 'Patio privado con pérgola y ducha exterior caliente/fría', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Patio privado de 90 m² con pérgola y ducha exterior caliente/fría', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'Climatización por suelo radiante frío-calor en todas las estancias', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'Wi-Fi de alta velocidad gratuito', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'Admite mascotas (Pet-Friendly)', value: true },
@@ -108,6 +157,7 @@ const graphEntities: Array<Record<string, any>> = [
         priceCurrency: 'EUR',
         unitText: 'NIGHT',
         availability: 'https://schema.org/InStock',
+        url: `${siteConfig.url}/tarifas`,
       },
       {
         '@type': 'Offer',
@@ -116,6 +166,7 @@ const graphEntities: Array<Record<string, any>> = [
         priceCurrency: 'EUR',
         unitText: 'NIGHT',
         availability: 'https://schema.org/InStock',
+        url: `${siteConfig.url}/tarifas`,
       },
       {
         '@type': 'Offer',
@@ -124,6 +175,7 @@ const graphEntities: Array<Record<string, any>> = [
         priceCurrency: 'EUR',
         unitText: 'WEEK',
         availability: 'https://schema.org/InStock',
+        url: `${siteConfig.url}/tarifas`,
       },
     ],
     aggregateRating: {
@@ -154,11 +206,12 @@ const graphEntities: Array<Record<string, any>> = [
   },
 ];
 
-if (includeFaqSchema) {
+const activeFaqs = faqItems || (includeFaqSchema ? faqsHome : null);
+if (activeFaqs && activeFaqs.length > 0) {
   graphEntities.push({
     '@type': 'FAQPage',
     '@id': `${canonicalUrl}#faq`,
-    mainEntity: faqsHome.map((f) => ({
+    mainEntity: activeFaqs.map((f) => ({
       '@type': 'Question',
       name: f.question,
       acceptedAnswer: {
@@ -166,6 +219,30 @@ if (includeFaqSchema) {
         text: f.answer,
       },
     })),
+  });
+}
+
+if (articleData) {
+  graphEntities.push({
+    '@type': 'BlogPosting',
+    '@id': `${canonicalUrl}#article`,
+    headline: articleData.headline,
+    description: articleData.description || description,
+    datePublished: articleData.datePublished,
+    dateModified: articleData.datePublished,
+    author: {
+      '@type': 'Organization',
+      name: articleData.author || siteConfig.name,
+      url: siteConfig.url,
+    },
+    publisher: { '@id': `${siteConfig.url}/#lodging` },
+    image: articleData.image
+      ? new URL(articleData.image, siteConfig.url).toString()
+      : ogImageUrl,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonicalUrl,
+    },
   });
 }
 
@@ -191,7 +268,16 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+    <link rel="alternate" hreflang="es-ES" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+    <meta name="author" content={siteConfig.name} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Preload LCP Image for Instant Largest Contentful Paint -->
+    {heroPreload && (
+      <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />
+    )}
 
     <!-- Geo Metas Local SEO (La Iglesuela del Tiétar, Toledo) -->
     <meta name="geo.region" content="ES-TO" />
@@ -207,6 +293,8 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={siteConfig.name} />
 
     <!-- Twitter Card -->
@@ -215,24 +303,55 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    <!-- Favicon & Theme Color -->
+    <!-- Favicon, Apple Touch Icon & Web Manifest -->
     <link rel="icon" type="image/jpeg" href={siteConfig.logo} />
+    <link rel="apple-touch-icon" href={siteConfig.logo} />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#703829" />
 
-    <!-- Google Fonts Optimizadas (Preconnect + Display Swap para LCP/CLS 0) -->
+    <!-- Google Fonts Non-Render-Blocking (Preconnect + Async Load para 100/100 PageSpeed) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- Speculation Rules API for Instant 0ms Navigation -->
+    <script type="speculationrules" is:inline>
+      {
+        "prerender": [
+          {
+            "where": {
+              "and": [
+                { "href_matches": "/*" },
+                { "not": { "href_matches": "/keystatic*" } },
+                { "not": { "href_matches": "/api/*" } }
+              ]
+            },
+            "eagerness": "moderate"
+          }
+        ]
+      }
+    </script>
 
     <!-- Schema.org JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body class="bg-surface text-on-surface antialiased selection:bg-primary-container selection:text-on-primary">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#703829] focus:text-white focus:rounded-lg">
+      Saltar al contenido principal
+    </a>
     <Header />
-    <main class="w-full pt-20 md:pt-28 bg-surface min-h-screen">
+    <main id="main-content" class="w-full pt-20 md:pt-28 bg-surface min-h-screen">
       <slot />
     </main>
     <Footer />
